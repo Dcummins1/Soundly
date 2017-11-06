@@ -18,6 +18,13 @@
         </activity>
         <activity android:name=".RegisterActivity" />
         <activity android:name=".UserAreaActivity"></activity>
+        <activity android:name=".AccelerometerActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.SYSTEM_TUTORIAL"/>
+            </intent-filter>
+
+
+        </activity>
     </application>
 
 </manifest>
