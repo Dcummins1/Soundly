@@ -7,7 +7,17 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.PowerManager;
+import android.os.SystemClock;
+import android.util.Log;
 import android.widget.TextView;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.util.Date;
 
 /**
  * Created by conan on 06/11/2017.
@@ -16,6 +26,16 @@ import android.widget.TextView;
 public class AccelerometerActivity extends Activity implements SensorEventListener {
 
         private float lastX, lastY, lastZ;
+
+        // one minute in ms
+        private final int timeSegment = 60000;
+
+        private float averageX;
+        private float averageY;
+        private float averageZ;
+
+        private long startTime;
+
 
         private SensorManager sensorManager;
         private Sensor accelerometer;
@@ -28,12 +48,21 @@ public class AccelerometerActivity extends Activity implements SensorEventListen
         private float deltaY = 0;
         private float deltaZ = 0;
 
-        private float vibrateThreshold = 0;
-
         private TextView currentX, currentY, currentZ, maxX, maxY, maxZ;
+
+        PowerManager pm;
+        PowerManager.WakeLock wl;
+
 
         @Override
         public void onCreate(Bundle savedInstanceState) {
+
+            // keeps running when screen is locked - **WARNING** just for testing.
+            pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+            wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "MyWakeLock");
+            wl.acquire();
+
+
             super.onCreate(savedInstanceState);
             setContentView(R.layout.accelo_example);
             initializeViews();
@@ -44,13 +73,63 @@ public class AccelerometerActivity extends Activity implements SensorEventListen
 
                 accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
                 sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
-                vibrateThreshold = accelerometer.getMaximumRange() / 2;
             } else {
-                // fail! we dont have an accelerometer!
+                // fail! we don't have an accelerometer!
             }
+            Date date = new Date();
+
+            createOutputFile(date.toString());
+            System.out.println(date.toString());
+            startTime = System.currentTimeMillis();
 
 
         }
+
+        public void createOutputFile(String data){
+            String path = Environment.getExternalStorageDirectory().getPath() + File.separator  + "SoundlyOutput";
+            System.out.println(path);
+            // Create the folder.
+            File folder = new File(path);
+            System.out.println(folder.mkdirs());
+
+            // Create the file.
+            File file = new File(folder, "output.txt");
+            // Save your stream, don't forget to flush() it before closing it.
+            try {
+                file.createNewFile();
+                FileOutputStream fOut = new FileOutputStream(file);
+                OutputStreamWriter myOutWriter = new OutputStreamWriter(fOut);
+                myOutWriter.append(data);
+
+                myOutWriter.close();
+
+                fOut.flush();
+                fOut.close();
+            }
+            catch (IOException e)
+            {
+                Log.e("Exception", "File write failed: " + e.toString());
+            }
+
+        }
+
+        public void writeToTestFile(String string){
+            try {
+                FileOutputStream fOut = new FileOutputStream(Environment.getExternalStorageDirectory().getPath() + File.separator  + "SoundlyOutput/output.txt", true);
+                OutputStreamWriter myOutWriter = new OutputStreamWriter(fOut);
+                myOutWriter.append(string);
+
+                myOutWriter.close();
+
+                fOut.flush();
+                fOut.close();
+            }
+            catch (IOException e){
+                Log.e("Exception", "File write failed: " + e.toString());
+            }
+
+        }
+
 
         public void initializeViews() {
             currentX = (TextView) findViewById(R.id.currentX);
@@ -65,13 +144,18 @@ public class AccelerometerActivity extends Activity implements SensorEventListen
         //onResume() register the accelerometer for listening the events
         protected void onResume() {
             super.onResume();
-            sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+//            sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
         }
 
         //onPause() unregister the accelerometer for stop listening the events
         protected void onPause() {
             super.onPause();
-            sensorManager.unregisterListener(this);
+//            sensorManager.unregisterListener(this);
+        }
+
+        protected void onStop(){
+            super.onStop();
+//            wl.release();
         }
 
         @Override
@@ -81,6 +165,17 @@ public class AccelerometerActivity extends Activity implements SensorEventListen
 
         @Override
         public void onSensorChanged(SensorEvent event) {
+            long currentTime = System.currentTimeMillis();
+
+
+            if(currentTime - startTime > 5000){
+                System.out.println(currentTime + "," + deltaXMax + ","+ deltaYMax + "," + deltaZMax);
+                writeToTestFile(currentTime + "," + deltaXMax + ","+ deltaYMax + "," + deltaZMax + "\n");
+                deltaXMax = 0;
+                deltaYMax = 0;
+                deltaZMax = 0;
+                startTime = currentTime;
+            }
 
             // clean current values
             displayCleanValues();
@@ -94,12 +189,18 @@ public class AccelerometerActivity extends Activity implements SensorEventListen
             deltaY = Math.abs(lastY - event.values[1]);
             deltaZ = Math.abs(lastZ - event.values[2]);
 
-            if (deltaX < 2)
-                deltaX = 0;
-            if (deltaY < 2)
-                deltaY = 0;
-            if (deltaZ < 2)
-                deltaX = 0;
+             //save values of x,y,z for next comparison
+            lastX = event.values[0];
+            lastY = event.values[1];
+            lastZ = event.values[2];
+
+            // ignore small changes
+//            if (deltaX < 2)
+//                deltaX = 0;
+//            if (deltaY < 2)
+//                deltaY = 0;
+//            if (deltaZ < 2)
+//                deltaX = 0;
 
         }
 
