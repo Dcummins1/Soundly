@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "384448381158",
+    "firebase_url": "https://soundly-4743f.firebaseio.com",
+    "project_id": "soundly-4743f",
+    "storage_bucket": "soundly-4743f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:384448381158:android:4bf1eafcc3db08f8",
+        "android_client_info": {
+          "package_name": "com.example.soundly"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "384448381158-p4oblf5n45s7l5dudoov9lk7lht03ejk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDJz8XRQ0yjrKaVozGuJx8Gqz9-pzDh7GI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
