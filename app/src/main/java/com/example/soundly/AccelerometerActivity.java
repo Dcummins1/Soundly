@@ -1,11 +1,15 @@
 package com.example.soundly;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.PowerManager;
@@ -53,8 +57,15 @@ public class AccelerometerActivity extends Activity implements SensorEventListen
         PowerManager pm;
         PowerManager.WakeLock wl;
 
+        AudioManager.OnAudioFocusChangeListener listener = new AudioManager.OnAudioFocusChangeListener() {
+            @Override
+            public void onAudioFocusChange(int focusChange) {
+                //
+            }
+        };
 
-        @Override
+
+    @Override
         public void onCreate(Bundle savedInstanceState) {
 
             // keeps running when screen is locked - **WARNING** just for testing.
@@ -78,7 +89,7 @@ public class AccelerometerActivity extends Activity implements SensorEventListen
             }
             Date date = new Date();
 
-            createOutputFile(date.toString());
+            createOutputFile(date.toString() + "\nt,ms2(combined)");
             System.out.println(date.toString());
             startTime = System.currentTimeMillis();
 
@@ -112,6 +123,8 @@ public class AccelerometerActivity extends Activity implements SensorEventListen
             }
 
         }
+
+
 
         public void writeToTestFile(String string){
             try {
@@ -153,6 +166,19 @@ public class AccelerometerActivity extends Activity implements SensorEventListen
 //            sensorManager.unregisterListener(this);
         }
 
+        private void forceMusicStop() {
+            System.out.println("STOPPING MUSIC");
+            AudioManager am = (AudioManager) this.getSystemService(Context.AUDIO_SERVICE);
+            if (am.isMusicActive()) {
+                System.out.println("MUSIC IS ACTIVE");
+                am.requestAudioFocus(listener, am.STREAM_MUSIC, am.AUDIOFOCUS_GAIN);
+//            Intent intentToStop = new Intent("com.sec.android.app.music.musicservicecommand");
+//            intentToStop.putExtra("command", "pause");
+//            this.sendBroadcast(intentToStop);
+        }
+    }
+
+
         protected void onStop(){
             super.onStop();
 //            wl.release();
@@ -168,9 +194,10 @@ public class AccelerometerActivity extends Activity implements SensorEventListen
             long currentTime = System.currentTimeMillis();
 
 
-            if(currentTime - startTime > 5000){
-                System.out.println(currentTime + "," + deltaXMax + ","+ deltaYMax + "," + deltaZMax);
-                writeToTestFile(currentTime + "," + deltaXMax + ","+ deltaYMax + "," + deltaZMax + "\n");
+            if(currentTime - startTime > 60000){
+//                forceMusicStop();
+                System.out.println(currentTime + "," + deltaXMax + deltaYMax + deltaZMax);
+                writeToTestFile(currentTime + "," + deltaXMax + deltaYMax + deltaZMax + "\n");
                 deltaXMax = 0;
                 deltaYMax = 0;
                 deltaZMax = 0;
