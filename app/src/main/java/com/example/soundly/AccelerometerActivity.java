@@ -89,7 +89,7 @@ public class AccelerometerActivity extends Activity implements SensorEventListen
             }
             Date date = new Date();
 
-            createOutputFile(date.toString() + "\nt,ms2(combined)");
+            createOutputFile(date.toString() + "\nt,ms2(combined)\n");
             System.out.println(date.toString());
             startTime = System.currentTimeMillis();
 
@@ -166,6 +166,7 @@ public class AccelerometerActivity extends Activity implements SensorEventListen
 //            sensorManager.unregisterListener(this);
         }
 
+        // method that pauses music on external apps.
         private void forceMusicStop() {
             System.out.println("STOPPING MUSIC");
             AudioManager am = (AudioManager) this.getSystemService(Context.AUDIO_SERVICE);
@@ -196,8 +197,9 @@ public class AccelerometerActivity extends Activity implements SensorEventListen
 
             if(currentTime - startTime > 60000){
 //                forceMusicStop();
-                System.out.println(currentTime + "," + deltaXMax + deltaYMax + deltaZMax);
-                writeToTestFile(currentTime + "," + deltaXMax + deltaYMax + deltaZMax + "\n");
+                float total = deltaXMax + deltaYMax + deltaZMax;
+                System.out.println(currentTime + "," + total);
+                writeToTestFile(currentTime + "," + total + "\n");
                 deltaXMax = 0;
                 deltaYMax = 0;
                 deltaZMax = 0;
