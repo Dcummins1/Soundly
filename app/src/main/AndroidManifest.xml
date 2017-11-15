@@ -3,8 +3,8 @@
     package="com.example.soundly">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -31,12 +31,19 @@
         <activity
             android:name=".ResetPasswordActivity"
             android:label="@string/title_activity_reset_password"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".AccelerometerActivity">
-        <intent-filter>
-            <action android:name="android.intent.action.SYSTEM_TUTORIAL"/>
-        </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SYSTEM_TUTORIAL" />
+            </intent-filter>
         </activity>
+        <activity
+            android:name=".SleepGraph"
+            android:label="@string/title_activity_sleep_graph"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+            <action android:name="android.intent.action.SYSTEM_TUTORIAL" />
+        </intent-filter></activity>
     </application>
 
 </manifest>
