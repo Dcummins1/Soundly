@@ -17,8 +17,12 @@ import android.os.SystemClock;
 import android.util.Log;
 import android.widget.TextView;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.Date;
@@ -52,6 +56,12 @@ public class AccelerometerActivity extends Activity implements SensorEventListen
         private float deltaY = 0;
         private float deltaZ = 0;
 
+        private float lastTotal1 = 5;
+        private float lastTotal2 = 5;
+        private float lastTotal3 = 5;
+
+        private final double sleepThreshold = 0.15;
+
         private TextView currentX, currentY, currentZ, maxX, maxY, maxZ;
 
         PowerManager pm;
@@ -65,7 +75,7 @@ public class AccelerometerActivity extends Activity implements SensorEventListen
         };
 
 
-    @Override
+        @Override
         public void onCreate(Bundle savedInstanceState) {
 
             // keeps running when screen is locked - **WARNING** just for testing.
@@ -88,37 +98,36 @@ public class AccelerometerActivity extends Activity implements SensorEventListen
             }
             Date date = new Date();
 
-            createOutputFile(date.toString() + "\nt,ms2(combined)\n");
-            System.out.println(date.toString());
+            if(! wl.isHeld()){
+                createOutputFile(date.toString() + "\n");
+//                System.out.println(date.toString());
+            }
+
             startTime = System.currentTimeMillis();
-
-
         }
 
         public void createOutputFile(String data){
-            String path = Environment.getExternalStorageDirectory().getPath() + File.separator  + "SoundlyOutput";
-            System.out.println(path);
-            // Create the folder.
-            File folder = new File(path);
-            System.out.println(folder.mkdirs());
+            String fileName = "soundly_output.txt";
 
-            // Create the file.
-            File file = new File(folder, "output.txt");
-            // Save your stream, don't forget to flush() it before closing it.
-            try {
-                file.createNewFile();
-                FileOutputStream fOut = new FileOutputStream(file);
-                OutputStreamWriter myOutWriter = new OutputStreamWriter(fOut);
+            try{
+                FileOutputStream fos = openFileOutput(fileName, Context.MODE_APPEND);
+                fos.write(data.getBytes());
+
+                OutputStreamWriter myOutWriter = new OutputStreamWriter(fos);
                 myOutWriter.append(data);
 
                 myOutWriter.close();
 
-                fOut.flush();
-                fOut.close();
+                fos.flush();
+                fos.close();
             }
             catch (IOException e)
             {
                 Log.e("Exception", "File write failed: " + e.toString());
+            }
+            for(String file : fileList()){
+                System.out.println(file);
+
             }
 
         }
@@ -127,20 +136,42 @@ public class AccelerometerActivity extends Activity implements SensorEventListen
 
         public void writeToTestFile(String string){
             try {
-                FileOutputStream fOut = new FileOutputStream(Environment.getExternalStorageDirectory().getPath() + File.separator  + "SoundlyOutput/output.txt", true);
-                OutputStreamWriter myOutWriter = new OutputStreamWriter(fOut);
-                myOutWriter.append(string);
-
-                myOutWriter.close();
-
-                fOut.flush();
-                fOut.close();
+//                System.out.println(getFilesDir()+File.separator+"soundly_output.txt");
+//                FileOutputStream fOut = new FileOutputStream(Environment.getDataDirectory() + File.separator  + "soundly_output.txt", true);
+//                OutputStreamWriter myOutWriter = new OutputStreamWriter(fOut);
+//                myOutWriter.append(string);
+//
+//                myOutWriter.close();
+//
+//                fOut.flush();
+//                fOut.close();
+                BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(new File(getFilesDir()+File.separator+"soundly_output.txt")));
+                bufferedWriter.write("string");
+                bufferedWriter.close();
             }
             catch (IOException e){
                 Log.e("Exception", "File write failed: " + e.toString());
             }
 
         }
+
+//        public void readFile(){
+//            try {
+//                BufferedReader bufferedReader = new BufferedReader(new FileReader(new File(getFilesDir() + File.separator + "soundly_output.txt")));
+//                String read;
+//                StringBuilder builder = new StringBuilder("");
+//
+//                while ((read = bufferedReader.readLine()) != null) {
+//                    builder.append(read);
+//                }
+//                System.out.println("Output: " + builder);
+//                bufferedReader.close();
+//            }
+//            catch(IOException e){
+//                System.out.println(e.getMessage());
+//
+//            }
+//        }
 
 
         public void initializeViews() {
@@ -204,10 +235,20 @@ public class AccelerometerActivity extends Activity implements SensorEventListen
                 float total = deltaXMax + deltaYMax + deltaZMax;
                 System.out.println(currentTime + "," + total);
                 writeToTestFile(currentTime + "," + total + "\n");
+//                readFile();
                 deltaXMax = 0;
                 deltaYMax = 0;
                 deltaZMax = 0;
                 startTime = currentTime;
+                lastTotal3 = lastTotal2;
+                lastTotal2 = lastTotal1;
+                lastTotal1 = total;
+
+                if(lastTotal1 < sleepThreshold && lastTotal2 < sleepThreshold && lastTotal3 < sleepThreshold){
+                    // user is asleep
+                    forceMusicStop();
+                }
+
             }
 
             // clean current values
