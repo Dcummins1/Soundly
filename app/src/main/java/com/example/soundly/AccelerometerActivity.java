@@ -71,7 +71,6 @@ public class AccelerometerActivity extends Activity implements SensorEventListen
             // keeps running when screen is locked - **WARNING** just for testing.
             pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
             wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "MyWakeLock");
-            wl.acquire();
 
 
             super.onCreate(savedInstanceState);
@@ -157,11 +156,15 @@ public class AccelerometerActivity extends Activity implements SensorEventListen
         //onResume() register the accelerometer for listening the events
         protected void onResume() {
             super.onResume();
+            if(wl.isHeld()){
+                wl.release();
+            }
 //            sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
         }
 
         //onPause() unregister the accelerometer for stop listening the events
         protected void onPause() {
+            wl.acquire();
             super.onPause();
 //            sensorManager.unregisterListener(this);
         }
@@ -181,6 +184,7 @@ public class AccelerometerActivity extends Activity implements SensorEventListen
 
 
         protected void onStop(){
+            wl.acquire();
             super.onStop();
 //            wl.release();
         }
