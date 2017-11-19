@@ -1,29 +1,38 @@
 package com.example.soundly;
 
-import android.content.res.AssetManager;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.helper.StaticLabelsFormatter;
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.LineGraphSeries;
+import com.jjoe64.graphview.series.PointsGraphSeries;
+
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class SleepGraph extends AppCompatActivity {
+    public static ArrayList<String> x_axis=new ArrayList<String>();
+    public static ArrayList<String> y_axis=new ArrayList<String>();
+    double[] xs;
+    double[] ys;
     String time;
+    String y;
+    int i =0;
+    int count = 0;
     List<Double> numbers = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,69 +53,90 @@ public class SleepGraph extends AppCompatActivity {
         //Should read from phone memory
 //        String path = Environment.getExternalStorageDirectory().getPath() + File.separator + "SoundlyOutput/output.txt";
 
-//        try {
-//            BufferedReader br = new BufferedReader(new FileReader(path));
-//            StringBuilder sb = new StringBuilder();
-//            String line = br.readLine();
-//
-//            while (line != null) {
-//                sb.append(line);
-//                sb.append(System.lineSeparator());
-//                line = br.readLine();
-//            }
-//            String everything = sb.toString();
-//            br.close();
-//            Toast.makeText(SleepGraph.this, everything, Toast.LENGTH_SHORT).show();
-//        }
-//        catch(IOException e){
-//            Log.e("Exception", "File read failed: " + e.toString());
-//            Toast.makeText(SleepGraph.this, "nope", Toast.LENGTH_SHORT).show();
-//        }
+            String data = "";
+
+            StringBuffer sbuff = new StringBuffer();
+            InputStream is = this.getResources().openRawResource(R.raw.output);
+            BufferedReader br = new BufferedReader(new InputStreamReader(is));
+            //BufferedReader br = new BufferedReader(new FileReader());
+
+            if (is != null){
+
+                try{
 
 
-//        try {
-//            BufferedReader br = new BufferedReader(new InputStreamReader(getAssets().open("test.txt")));
-//            //BufferedReader br = new BufferedReader(new FileReader());
-//
-//            StringBuilder sb = new StringBuilder();
-//            String line = br.readLine();
-//
-//
-//            while (line != null) {
-//                br.readLine(); //read first line and ignore
-//                //sb.append(line);
-//                //sb.append(System.lineSeparator());
-////                Toast.makeText(this, line, Toast.LENGTH_LONG).show();
-//                String[] parts =  line.split(",");
-//                if (parts !=null) {
-//                time = parts[0];
-//                Float x = Float.parseFloat(parts[1]);
-//                Float y = Float.parseFloat(parts[2]);
-//                Float z = Float.parseFloat(parts[3]);
-//
-//
-//            }
-//            //Toast.makeText(this, time, Toast.LENGTH_LONG).show();
-//                }
-//            //String everything = sb.toString();
-//            br.close();
-//            StringBuilder builder = new StringBuilder();
-//
-//        }
-//        catch(IOException e){
-//            Log.e("Exception", "File read failed: " + e.toString());
-//            Toast.makeText(SleepGraph.this, "nope", Toast.LENGTH_SHORT).show();
-//
-//        }
+
+
+                    String NAME = br.readLine();//skip first line
+
+                    while ((data = br.readLine())!=null) {
+
+                        sbuff.append(data + "\n");
+                        String[] parts = data.split(",");
+                        if (parts != null) {
+                            time = parts[0];
+                            y = (parts[1]);
+                            if (Double.parseDouble(y) < 10){
+                            x_axis.add(i+"");
+                            y_axis.add(y);
+                            i++;}
+                        }
+
+                    }
+                    GraphView graph;
+                    LineGraphSeries<DataPoint> series;
+                    graph = (GraphView) findViewById(R.id.graph);
+                    series= new LineGraphSeries<>(data());   //initializing/defining series to get the data from the method 'data()'
+                    graph.addSeries(series);                   //adding the series to the GraphView
+                    series.setTitle(NAME);
+                    series.setColor(Color.BLUE);
+                    series.setDrawDataPoints(false);
+                    series.setDataPointsRadius(5);
+                    series.setThickness(3);
+                    graph.getViewport().setMinX(0);
+                    graph.getViewport().setMaxX(i);
+                    graph.getViewport().setMinY(0);
+                    graph.getViewport().setMaxY(10.0);
+
+                    graph.getViewport().setYAxisBoundsManual(true);
+                    graph.getViewport().setXAxisBoundsManual(true);
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
+                    String reportDate = sdf.format(time);
+
+                    StaticLabelsFormatter staticLabelsFormatter = new StaticLabelsFormatter(graph);
+                    staticLabelsFormatter.setHorizontalLabels(new String[] {"Today","   Week", reportDate, ""});
+
+                    graph.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter);
+
+
+
+
+
+
+                    //Toast.makeText(this, xs+"", Toast.LENGTH_LONG).show();
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+
+    }
+    public DataPoint[] data(){
+        int n=x_axis.size();     //to find out the no. of data-points
+        DataPoint[] values = new DataPoint[n];     //creating an object of type DataPoint[] of size 'n'
+        for(int j=0;j<n;j++){
+            DataPoint v = new DataPoint(Double.parseDouble(x_axis.get(j)),Double.parseDouble(y_axis.get(j)));
+            values[j] = v;
+        }
+
+        return values;
+    }
+
 
     }
 
 
 
 
-
-
-}
         //Basic idea is to 1st read a static file and graph movements during sleep. Then 2nd Read live accelerometer file and graph.
         // This will be used to trigger the main function to stop other applications
         //read in static file
