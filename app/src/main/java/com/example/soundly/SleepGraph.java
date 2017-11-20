@@ -1,0 +1,222 @@
+package com.example.soundly;
+
+import android.graphics.Color;
+import android.os.Bundle;
+import android.os.Environment;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.Toast;
+
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.helper.StaticLabelsFormatter;
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.LineGraphSeries;
+import com.jjoe64.graphview.series.PointsGraphSeries;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+
+public class SleepGraph extends AppCompatActivity {
+    public static ArrayList<String> x_axis=new ArrayList<String>();
+    public static ArrayList<String> y_axis=new ArrayList<String>();
+    double[] xs;
+    double[] ys;
+    String time;
+    String y;
+    int i =0;
+    int count = 0;
+    List<Double> numbers = new ArrayList<>();
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_sleep_graph);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+
+            }
+        });
+        //Should read from phone memory
+        //String path = Environment.getExternalStorageDirectory().getPath() + File.separator + "SoundlyOutput/output.txt";
+
+        String path = Environment.getExternalStorageDirectory().getPath() + File.separator + "SoundlyOutput/output.txt";
+        File yourFile = new File(path);
+        if (yourFile.exists()) {
+            FileInputStream fis = null;
+            try {
+                fis = new FileInputStream(yourFile);
+
+                InputStreamReader is = new InputStreamReader(fis);
+                BufferedReader br = new BufferedReader(is);
+                StringBuffer sbuff = new StringBuffer();
+                String data = "";
+
+                if (is != null) {
+
+                    try {
+
+
+                        String NAME = br.readLine();//skip first line
+
+                        while ((data = br.readLine()) != null) {
+
+                            sbuff.append(data + "\n");
+                            String[] parts = data.split(",");
+                            if (parts != null) {
+                                time = parts[0];
+                                y = (parts[1]);
+                                if (Double.parseDouble(y) < 10) {
+                                    x_axis.add(i + "");
+                                    y_axis.add(y);
+                                    i++;
+                                }
+                            }
+
+                        }
+                        GraphView graph;
+                        LineGraphSeries<DataPoint> series;
+                        graph = (GraphView) findViewById(R.id.graph);
+                        series = new LineGraphSeries<>(data());   //initializing/defining series to get the data from the method 'data()'
+                        graph.addSeries(series);                   //adding the series to the GraphView
+                        series.setTitle(NAME);
+                        series.setColor(Color.BLUE);
+                        series.setDrawDataPoints(false);
+                        series.setDataPointsRadius(5);
+                        series.setThickness(3);
+                        graph.getViewport().setMinX(0);
+                        graph.getViewport().setMaxX(i);
+                        graph.getViewport().setMinY(0);
+                        graph.getViewport().setMaxY(10.0);
+
+                        graph.getViewport().setYAxisBoundsManual(true);
+                        graph.getViewport().setXAxisBoundsManual(true);
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
+                        String reportDate = sdf.format(time);
+
+                        StaticLabelsFormatter staticLabelsFormatter = new StaticLabelsFormatter(graph);
+                        staticLabelsFormatter.setHorizontalLabels(new String[]{"Today", "   Week", reportDate, ""});
+
+                        graph.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter);
+
+
+                        //Toast.makeText(this, xs+"", Toast.LENGTH_LONG).show();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+
+        } else {
+            String data = "";
+
+            StringBuffer sbuff = new StringBuffer();
+            InputStream is = this.getResources().openRawResource(R.raw.output);
+            BufferedReader br = new BufferedReader(new InputStreamReader(is));
+            //BufferedReader br = new BufferedReader(new FileReader());
+
+            if (is != null) {
+
+                try {
+
+
+                    String NAME = br.readLine();//skip first line
+
+                    while ((data = br.readLine()) != null) {
+
+                        sbuff.append(data + "\n");
+                        String[] parts = data.split(",");
+                        if (parts != null) {
+                            time = parts[0];
+                            y = (parts[1]);
+                            if (Double.parseDouble(y) < 10) {
+                                x_axis.add(i + "");
+                                y_axis.add(y);
+                                i++;
+                            }
+                        }
+
+                    }
+                    GraphView graph;
+                    LineGraphSeries<DataPoint> series;
+                    graph = (GraphView) findViewById(R.id.graph);
+                    series = new LineGraphSeries<>(data());   //initializing/defining series to get the data from the method 'data()'
+                    graph.addSeries(series);                   //adding the series to the GraphView
+                    series.setTitle(NAME);
+                    series.setColor(Color.BLUE);
+                    series.setDrawDataPoints(false);
+                    series.setDataPointsRadius(5);
+                    series.setThickness(3);
+                    graph.getViewport().setMinX(0);
+                    graph.getViewport().setMaxX(i);
+                    graph.getViewport().setMinY(0);
+                    graph.getViewport().setMaxY(10.0);
+
+                    graph.getViewport().setYAxisBoundsManual(true);
+                    graph.getViewport().setXAxisBoundsManual(true);
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
+                    String reportDate = sdf.format(time);
+
+                    StaticLabelsFormatter staticLabelsFormatter = new StaticLabelsFormatter(graph);
+                    staticLabelsFormatter.setHorizontalLabels(new String[]{"Today", "   Week", reportDate, ""});
+
+                    graph.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter);
+
+
+                    //Toast.makeText(this, xs+"", Toast.LENGTH_LONG).show();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+        } }
+        public DataPoint[] data () {
+            int n = x_axis.size();     //to find out the no. of data-points
+            DataPoint[] values = new DataPoint[n];     //creating an object of type DataPoint[] of size 'n'
+            for (int j = 0; j < n; j++) {
+                DataPoint v = new DataPoint(Double.parseDouble(x_axis.get(j)), Double.parseDouble(y_axis.get(j)));
+                values[j] = v;
+            }
+
+            return values;
+        }
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
