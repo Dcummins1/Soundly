@@ -1,5 +1,6 @@
 package com.example.soundly;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Environment;
@@ -20,6 +21,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
@@ -54,81 +57,57 @@ public class SleepGraph extends AppCompatActivity {
 
             }
         });
-        //Should read from phone memory
-        //String path = Environment.getExternalStorageDirectory().getPath() + File.separator + "SoundlyOutput/output.txt";
-
-        String path = Environment.getExternalStorageDirectory().getPath() + File.separator + "SoundlyOutput/output.txt";
-        File yourFile = new File(path);
-        if (yourFile.exists()) {
-            FileInputStream fis = null;
-            try {
-                fis = new FileInputStream(yourFile);
-
-                InputStreamReader is = new InputStreamReader(fis);
-                BufferedReader br = new BufferedReader(is);
-                StringBuffer sbuff = new StringBuffer();
-                String data = "";
-
-                if (is != null) {
-
-                    try {
 
 
-                        String NAME = br.readLine();//skip first line
+        //readFile();
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(new File(getFilesDir() + File.separator + "soundly_output.txt")));
+            String read;
+            String NAME = br.readLine();
+            Toast.makeText(this, NAME, Toast.LENGTH_LONG).show();
 
-                        while ((data = br.readLine()) != null) {
+            while ((read = br.readLine()) != null) {
 
-                            sbuff.append(data + "\n");
-                            String[] parts = data.split(",");
-                            if (parts != null) {
-                                time = parts[0];
-                                y = (parts[1]);
-                                if (Double.parseDouble(y) < 10) {
-                                    x_axis.add(i + "");
-                                    y_axis.add(y);
-                                    i++;
-                                }
-                            }
-
-                        }
-                        GraphView graph;
-                        LineGraphSeries<DataPoint> series;
-                        graph = (GraphView) findViewById(R.id.graph);
-                        series = new LineGraphSeries<>(data());   //initializing/defining series to get the data from the method 'data()'
-                        graph.addSeries(series);                   //adding the series to the GraphView
-                        series.setTitle(NAME);
-                        series.setColor(Color.BLUE);
-                        series.setDrawDataPoints(false);
-                        series.setDataPointsRadius(5);
-                        series.setThickness(3);
-                        graph.getViewport().setMinX(0);
-                        graph.getViewport().setMaxX(i);
-                        graph.getViewport().setMinY(0);
-                        graph.getViewport().setMaxY(10.0);
-
-                        graph.getViewport().setYAxisBoundsManual(true);
-                        graph.getViewport().setXAxisBoundsManual(true);
-                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
-                        String reportDate = sdf.format(time);
-
-                        StaticLabelsFormatter staticLabelsFormatter = new StaticLabelsFormatter(graph);
-                        staticLabelsFormatter.setHorizontalLabels(new String[]{"Today", "   Week", reportDate, ""});
-
-                        graph.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter);
-
-
-                        //Toast.makeText(this, xs+"", Toast.LENGTH_LONG).show();
-                    } catch (Exception e) {
-                        e.printStackTrace();
+                String[] parts =  read.split(",");
+                if (parts != null) {
+                    time = parts[0];
+                    y = (parts[1]);
+                    if (Double.parseDouble(y) < 10) {
+                        x_axis.add(i + "");
+                        y_axis.add(y);
+                        i++;
                     }
                 }
 
-
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
             }
+            GraphView graph;
+            LineGraphSeries<DataPoint> series;
+            graph = (GraphView) findViewById(R.id.graph);
+            series = new LineGraphSeries<>(data());   //initializing/defining series to get the data from the method 'data()'
+            graph.addSeries(series);                   //adding the series to the GraphView
+            // series.setTitle(NAME);
+            series.setColor(Color.BLUE);
+            series.setDrawDataPoints(false);
+            series.setDataPointsRadius(5);
+            series.setThickness(3);
+            graph.getViewport().setMinX(0);
+            graph.getViewport().setMaxX(i);
+            graph.getViewport().setMinY(0);
+            graph.getViewport().setMaxY(10.0);
 
-        } else {
+            graph.getViewport().setYAxisBoundsManual(true);
+            graph.getViewport().setXAxisBoundsManual(true);
+//                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
+//                        String reportDate = sdf.format(time);
+//
+//                        StaticLabelsFormatter staticLabelsFormatter = new StaticLabelsFormatter(graph);
+//                        staticLabelsFormatter.setHorizontalLabels(new String[]{"Today", "   Week", reportDate, ""});
+//
+//                        graph.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter);
+
+
+            //Toast.makeText(this, xs+"", Toast.LENGTH_LONG).show();
+        } catch (Exception e) {
             String data = "";
 
             StringBuffer sbuff = new StringBuffer();
@@ -175,22 +154,29 @@ public class SleepGraph extends AppCompatActivity {
 
                     graph.getViewport().setYAxisBoundsManual(true);
                     graph.getViewport().setXAxisBoundsManual(true);
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
-                    String reportDate = sdf.format(time);
+//                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
+//                    String reportDate = sdf.format(time);
+//
+//                    StaticLabelsFormatter staticLabelsFormatter = new StaticLabelsFormatter(graph);
+//                    staticLabelsFormatter.setHorizontalLabels(new String[]{"Today", "   Week", reportDate, ""});
 
-                    StaticLabelsFormatter staticLabelsFormatter = new StaticLabelsFormatter(graph);
-                    staticLabelsFormatter.setHorizontalLabels(new String[]{"Today", "   Week", reportDate, ""});
-
-                    graph.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter);
+                   // graph.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter);
 
 
                     //Toast.makeText(this, xs+"", Toast.LENGTH_LONG).show();
-                } catch (Exception e) {
-                    e.printStackTrace();
+                } catch (Exception p) {
+                    p.printStackTrace();
                 }
             }
+            e.printStackTrace();
+        }
+    }
 
-        } }
+
+
+
+
+
         public DataPoint[] data () {
             int n = x_axis.size();     //to find out the no. of data-points
             DataPoint[] values = new DataPoint[n];     //creating an object of type DataPoint[] of size 'n'
@@ -201,6 +187,29 @@ public class SleepGraph extends AppCompatActivity {
 
             return values;
         }
+
+    public void readFile(){
+        try {
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(new File(getFilesDir() + File.separator + "soundly_output.txt")));
+            String read;
+            StringBuilder builder = new StringBuilder("");
+
+            while ((read = bufferedReader.readLine()) != null) {
+                builder.append(read + "\n");
+            }
+            System.out.println("#############################################################");
+            System.out.println("Output: " + builder);
+            System.out.println("#############################################################");
+
+            bufferedReader.close();
+
+        }
+        catch(IOException e){
+            System.out.println(e.getMessage());
+
+        }
+    }
+
 
 
     }
