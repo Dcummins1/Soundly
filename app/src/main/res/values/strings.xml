@@ -30,4 +30,5 @@
     <string name="forgot_password_msg">We just need your registered Email Id to sent you password reset instructions.</string>
     <string name="title_activity_signup">SignupActivity</string>
     <string name="title_activity_sleep_graph">SleepGraph</string>
+    <string name="spotify_playlist">\"Spotify Playlist\"</string>
 </resources>

@@ -59,7 +59,7 @@ public class SleepGraph extends AppCompatActivity {
         });
 
 
-        //readFile();
+        readFile();
         try {
             BufferedReader br = new BufferedReader(new FileReader(new File(getFilesDir() + File.separator + "soundly_output.txt")));
             String read;
