@@ -16,6 +16,7 @@ import android.os.PowerManager;
 import android.os.SystemClock;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -99,6 +100,8 @@ public class AccelerometerActivity extends Activity implements SensorEventListen
             Date date = new Date();
 
             if(! wl.isHeld()){
+                Toast.makeText(this, "making file", Toast.LENGTH_LONG).show();
+
                 createOutputFile(date.toString() + "\n");
 //                System.out.println(date.toString());
             }
@@ -108,13 +111,26 @@ public class AccelerometerActivity extends Activity implements SensorEventListen
 
         public void createOutputFile(String data){
             String fileName = "soundly_output.txt";
+            Context context = getApplicationContext();
+            String yourFilePath = context.getFilesDir() + "/" + "soundly_output.txt";
+
+            File yourFile = new File( yourFilePath );
+
+            if (yourFile.exists()) {
+                System.out.println("file exists");
+                //boolean deleted = yourFile.delete();
+
+            }
+
+
+
 
             try{
-                FileOutputStream fos = openFileOutput(fileName, Context.MODE_APPEND);
-                fos.write(data.getBytes());
+                FileOutputStream fos = openFileOutput(fileName, Context.MODE_PRIVATE);
+                //fos.write(data.getBytes());
 
                 OutputStreamWriter myOutWriter = new OutputStreamWriter(fos);
-                myOutWriter.append(data);
+                myOutWriter.write(data);
 
                 myOutWriter.close();
 
@@ -136,18 +152,19 @@ public class AccelerometerActivity extends Activity implements SensorEventListen
 
         public void writeToTestFile(String string){
             try {
-//                System.out.println(getFilesDir()+File.separator+"soundly_output.txt");
-//                FileOutputStream fOut = new FileOutputStream(Environment.getDataDirectory() + File.separator  + "soundly_output.txt", true);
-//                OutputStreamWriter myOutWriter = new OutputStreamWriter(fOut);
-//                myOutWriter.append(string);
-//
-//                myOutWriter.close();
-//
-//                fOut.flush();
-//                fOut.close();
-                BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(new File(getFilesDir()+File.separator+"soundly_output.txt")));
-                bufferedWriter.write("string");
-                bufferedWriter.close();
+                System.out.println(getFilesDir()+File.separator+"soundly_output.txt");
+                //fout = openFileOutput(Environment.getDataDirectory() + File.separator  + "soundly_output.txt", Context.MODE_APPEND);
+                FileOutputStream fOut = new FileOutputStream(getFilesDir()+File.separator+"soundly_output.txt", true);
+                OutputStreamWriter myOutWriter = new OutputStreamWriter(fOut);
+                myOutWriter.write(string);
+
+                myOutWriter.close();
+
+                fOut.flush();
+                fOut.close();
+//                BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(new File(getFilesDir()+File.separator+"soundly_output.txt")));
+//                bufferedWriter.append(string);
+//                 bufferedWriter.close();
             }
             catch (IOException e){
                 Log.e("Exception", "File write failed: " + e.toString());
@@ -230,7 +247,7 @@ public class AccelerometerActivity extends Activity implements SensorEventListen
             long currentTime = System.currentTimeMillis();
 
 
-            if(currentTime - startTime > 60000){
+            if(currentTime - startTime > 60){  //60000
 //                forceMusicStop();
                 float total = deltaXMax + deltaYMax + deltaZMax;
                 System.out.println(currentTime + "," + total);
