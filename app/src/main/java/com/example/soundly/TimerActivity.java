@@ -1,6 +1,7 @@
 package com.example.soundly;
 
 import android.content.Context;
+import android.media.AudioManager;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,13 +20,20 @@ public class TimerActivity extends AppCompatActivity {
     Button startButton, stopButton;
     TextView textView;
 
+    AudioManager.OnAudioFocusChangeListener listener = new AudioManager.OnAudioFocusChangeListener() {
+        @Override
+        public void onAudioFocusChange(int focusChange) {
+            //
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timer);
 
         editText = (EditText) findViewById(R.id.editText);
-        progressBar=(ProgressBar)findViewById(R.id.progressBar);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
         startButton = (Button) findViewById(R.id.startButton);
         stopButton = (Button) findViewById(R.id.stopButton);
         textView = (TextView) findViewById(R.id.textView);
@@ -36,7 +44,7 @@ public class TimerActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 //checks if there is user input; displays toast when no input has been given.
-                if  (editText.getText().toString().equals("")) {
+                if (editText.getText().toString().equals("")) {
                     Context context = getApplicationContext();
                     CharSequence textT = "Please enter time";
                     int duration = Toast.LENGTH_LONG;
@@ -50,7 +58,7 @@ public class TimerActivity extends AppCompatActivity {
                     String text = editText.getText().toString();
                     int seconds = Integer.valueOf(text);
 
-                    if (seconds == 0){
+                    if (seconds == 0) {
                         Context context = getApplicationContext();
                         CharSequence textT = "Please enter valid time input";
                         int duration = Toast.LENGTH_LONG;
@@ -69,11 +77,13 @@ public class TimerActivity extends AppCompatActivity {
                                 int progress = (int) (l / 1000);
                                 progressBar.setProgress(progress);
                             }
+
                             @Override
                             public void onFinish() {
                                 textView.setText("Finished!");
                                 editText.setFocusableInTouchMode(true);
                                 System.out.println("finished");
+                                forceMusicStop();
                             }
                         };
 
@@ -95,5 +105,18 @@ public class TimerActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    // method that pauses music on external apps.
+    private void forceMusicStop() {
+        System.out.println("STOPPING MUSIC");
+        AudioManager am = (AudioManager) this.getSystemService(Context.AUDIO_SERVICE);
+        if (am.isMusicActive()) {
+            System.out.println("MUSIC IS ACTIVE");
+            am.requestAudioFocus(listener, am.STREAM_MUSIC, am.AUDIOFOCUS_GAIN);
+//            Intent intentToStop = new Intent("com.sec.android.app.music.musicservicecommand");
+//            intentToStop.putExtra("command", "pause");
+//            this.sendBroadcast(intentToStop);
+        }
     }
 }
