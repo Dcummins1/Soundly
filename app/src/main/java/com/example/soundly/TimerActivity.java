@@ -1,6 +1,7 @@
 package com.example.soundly;
 
 import android.content.Context;
+import android.content.Intent;
 import android.media.AudioManager;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
@@ -20,12 +21,35 @@ public class TimerActivity extends AppCompatActivity {
     Button startButton, stopButton;
     TextView textView;
 
-    AudioManager.OnAudioFocusChangeListener listener = new AudioManager.OnAudioFocusChangeListener() {
-        @Override
-        public void onAudioFocusChange(int focusChange) {
-            //
-        }
-    };
+
+//    AudioManager.OnAudioFocusChangeListener listener = new AudioManager.OnAudioFocusChangeListener() {
+//        @Override
+//        public void onAudioFocusChange(int focusChange) {
+//            //
+//        }
+//    };
+//
+//    // method that pauses music on external apps.
+//    private void forceMusicStop() {
+//        System.out.println("STOPPING MUSIC");
+//        AudioManager am = (AudioManager) this.getSystemService(Context.AUDIO_SERVICE);
+//        if (am.isMusicActive()) {
+//            System.out.println("MUSIC IS ACTIVE");
+//            am.requestAudioFocus(listener, am.STREAM_MUSIC, am.AUDIOFOCUS_GAIN);
+////            Intent intentToStop = new Intent("com.sec.android.app.music.musicservicecommand");
+////            intentToStop.putExtra("command", "pause");
+////            this.sendBroadcast(intentToStop);
+//        }
+//    }
+
+//    public void startService(View view) {
+//        startService(new Intent(getBaseContext(), TimerService.class));
+//    }
+//
+//    // Method to stop the service
+//    public void stopService(View view) {
+//        stopService(new Intent(getBaseContext(), TimerService.class));
+//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +96,9 @@ public class TimerActivity extends AppCompatActivity {
                         final CountDownTimer countDownTimer = new CountDownTimer(seconds * 60000, 1000) {
                             @Override
                             public void onTick(long l) {
-                                textView.setText("Minutes: " + ((int) (l / 60000) + 1));
+                                long minutes = l / 60000;
+                                long seconds = l / 1000 % 60;
+                                textView.setText("Time remaining: " + minutes + ":" + seconds);
 
                                 int progress = (int) (l / 1000);
                                 progressBar.setProgress(progress);
@@ -83,7 +109,8 @@ public class TimerActivity extends AppCompatActivity {
                                 textView.setText("Finished!");
                                 editText.setFocusableInTouchMode(true);
                                 System.out.println("finished");
-                                forceMusicStop();
+//                                forceMusicStop();
+                                stopService(new Intent(getBaseContext(), TimerService.class));
                             }
                         };
 
@@ -91,6 +118,7 @@ public class TimerActivity extends AppCompatActivity {
                         countDownTimer.start();
                         editText.setText("");
                         editText.setFocusable(false);
+                        startService(new Intent(getBaseContext(), TimerService.class));
 
                         //cancels timer on stopButton click
                         stopButton.setOnClickListener(new View.OnClickListener() {
@@ -99,24 +127,12 @@ public class TimerActivity extends AppCompatActivity {
                                 countDownTimer.cancel();
                                 textView.setText("");
                                 editText.setFocusableInTouchMode(true);
+                                stopService(new Intent(getBaseContext(), TimerService.class));
                             }
                         });
                     }
                 }
             }
         });
-    }
-
-    // method that pauses music on external apps.
-    private void forceMusicStop() {
-        System.out.println("STOPPING MUSIC");
-        AudioManager am = (AudioManager) this.getSystemService(Context.AUDIO_SERVICE);
-        if (am.isMusicActive()) {
-            System.out.println("MUSIC IS ACTIVE");
-            am.requestAudioFocus(listener, am.STREAM_MUSIC, am.AUDIOFOCUS_GAIN);
-//            Intent intentToStop = new Intent("com.sec.android.app.music.musicservicecommand");
-//            intentToStop.putExtra("command", "pause");
-//            this.sendBroadcast(intentToStop);
-        }
     }
 }
