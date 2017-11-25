@@ -18,9 +18,7 @@ import static android.provider.AlarmClock.EXTRA_MESSAGE;
 public class UserAreaActivity extends AppCompatActivity {
 
     EditText editText;
-    //    ProgressBar progressBar;
     Button timerButton, stopButton, settings, soundly;
-    //timerButton was previously startButton
     TextView textView, tvGraph;
 
     @Override

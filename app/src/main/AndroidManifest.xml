@@ -34,7 +34,8 @@
         <activity
             android:name=".SettingsActivity"
             android:label="Settings"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:exported="true"/>
         <activity
             android:name=".ResetPasswordActivity"
             android:label="@string/title_activity_reset_password"
