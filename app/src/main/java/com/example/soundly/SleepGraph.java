@@ -9,6 +9,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jjoe64.graphview.GraphView;
@@ -32,6 +33,7 @@ import java.util.Date;
 import java.util.List;
 
 public class SleepGraph extends AppCompatActivity {
+    TextView title;
     public static ArrayList<String> x_axis=new ArrayList<String>();
     public static ArrayList<String> y_axis=new ArrayList<String>();
     double[] xs;
@@ -48,15 +50,6 @@ public class SleepGraph extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-
-            }
-        });
 
 
         readFile();
@@ -64,6 +57,7 @@ public class SleepGraph extends AppCompatActivity {
             BufferedReader br = new BufferedReader(new FileReader(new File(getFilesDir() + File.separator + "soundly_output.txt")));
             String read;
             String NAME = br.readLine();
+            String Title = NAME.substring(0, 18);
             Toast.makeText(this, NAME, Toast.LENGTH_LONG).show();
 
             while ((read = br.readLine()) != null) {
