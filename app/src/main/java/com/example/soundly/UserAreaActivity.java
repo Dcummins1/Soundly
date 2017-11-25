@@ -58,7 +58,7 @@ public class UserAreaActivity extends AppCompatActivity implements SensorEventLi
     //    ProgressBar progressBar;
     Button timerButton, stopButton, settings, soundly;
     //timerButton was previously startButton
-    TextView textView;
+    TextView textView, tvGraph;
 
     //CONAN PASTE OPEN
     private float lastX, lastY, lastZ;
@@ -115,10 +115,9 @@ public class UserAreaActivity extends AppCompatActivity implements SensorEventLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_area);
-        TextView tvGraph = (TextView) findViewById(R.id.tvgraph);
 
-//        Button soundly = (Button) findViewById(R.id.bStart);
-//        Button settings = (Button) findViewById(R.id.bSettings);
+        //@Dan changed tvGraph, soundly and settings slightly
+        tvGraph = (TextView) findViewById(R.id.tvgraph);
         soundly = (Button) findViewById(R.id.bStart);
         settings = (Button) findViewById(R.id.bSettings);
         timerButton = (Button) findViewById(R.id.startButton);
@@ -134,12 +133,6 @@ public class UserAreaActivity extends AppCompatActivity implements SensorEventLi
             }
         });
 
-//        timer.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                startActivity(new Intent(UserAreaActivity.this, TimerActivity.class));
-//            }
-//        });
 
         soundly.setOnClickListener(new View.OnClickListener() {
             @Override
