@@ -89,7 +89,7 @@ public class UserAreaActivity extends AppCompatActivity implements SensorEventLi
     private int sensitivity = 1;
     private double sleepThreshold = 0.15;
 
-    private boolean saveFile = true;
+    private boolean saveFile;
     private boolean soundlyOn = false;
 
 //    private TextView currentX, currentY, currentZ, maxX, maxY, maxZ;
@@ -137,9 +137,23 @@ public class UserAreaActivity extends AppCompatActivity implements SensorEventLi
             public void onClick(View v) {
 //                startActivity(new Intent(UserAreaActivity.this, AccelerometerActivity.class));
                 if(soundly.getText().equals("Start Soundly")){
+                    Date date = new Date();
+
+
+                    Context context = getApplicationContext();
+                    Toast.makeText(context, "making file", Toast.LENGTH_LONG).show();
+
+                    createOutputFile(date.toString() + "\n");
+//                System.out.println(date.toString());
+
+//                    if(! wl.isHeld()){
+//
+//                        createOutputFile(date.toString() + "\n");
+////                System.out.println(date.toString());
+//                    }
                     soundlyOn = true;
                     soundly.setText("Stop Soundly");
-                    Context context = getApplicationContext();
+
                     CharSequence textT = "Soundly Activated";
                     int duration = Toast.LENGTH_LONG;
                     Toast toast = Toast.makeText(context, textT, duration);
@@ -259,14 +273,14 @@ public class UserAreaActivity extends AppCompatActivity implements SensorEventLi
         } else {
             // fail! we don't have an accelerometer!
         }
-        Date date = new Date();
-
-        if(! wl.isHeld()){
-            Toast.makeText(this, "making file", Toast.LENGTH_LONG).show();
-
-            createOutputFile(date.toString() + "\n");
-//                System.out.println(date.toString());
-        }
+//        Date date = new Date();
+//
+//        if(! wl.isHeld()){
+//            Toast.makeText(this, "making file", Toast.LENGTH_LONG).show();
+//
+//            createOutputFile(date.toString() + "\n");
+////                System.out.println(date.toString());
+//        }
 
         startTime = System.currentTimeMillis();
         devicePolicyManager = (DevicePolicyManager)getSystemService(Context.DEVICE_POLICY_SERVICE);
@@ -307,6 +321,8 @@ public class UserAreaActivity extends AppCompatActivity implements SensorEventLi
 
         if (yourFile.exists()) {
             System.out.println("file exists");
+            boolean deleted = yourFile.delete();
+
         }
 
 
@@ -450,7 +466,7 @@ public class UserAreaActivity extends AppCompatActivity implements SensorEventLi
             long currentTime = System.currentTimeMillis();
 
 
-            if (currentTime - startTime > 60000) {  //60000
+            if (currentTime - startTime > 600) {  //60000
 //            forceMusicStop();
                 float total = deltaXMax + deltaYMax + deltaZMax;
                 System.out.println(currentTime + "," + total);

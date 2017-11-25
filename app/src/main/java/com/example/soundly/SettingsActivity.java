@@ -33,6 +33,7 @@ public class SettingsActivity extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener authListener;
     private FirebaseAuth auth;
     private int senser1;
+    private boolean saving;
 
     public static final String MyPREFERENCES = "MyPrefs";
     public static final String savefile = "saveFile";
@@ -61,6 +62,7 @@ public class SettingsActivity extends AppCompatActivity {
                 }
             }
         };
+        swsave = (Switch) findViewById(R.id.swSaveFile);
 
         btnChangePassword = (Button) findViewById(R.id.bChangePassword);
         btnRemoveUser = (Button) findViewById(R.id.bDeleteUser);
@@ -71,7 +73,9 @@ public class SettingsActivity extends AppCompatActivity {
         save = (TextView) findViewById(R.id.tvSave);
         sense = (TextView) findViewById(R.id.tvSense);
         slide = (SeekBar) findViewById(R.id.seekBar);
-        slide.setProgress(loadSharedPreferences());
+        loadSharedPreferences();
+        swsave.setChecked(saving);
+        slide.setProgress(senser1);
         slide.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
             @Override
@@ -94,7 +98,7 @@ public class SettingsActivity extends AppCompatActivity {
         });
 
 
-        swsave = (Switch) findViewById(R.id.swSaveFile);
+
 
         password.setVisibility(View.GONE);
         newPassword.setVisibility(View.GONE);
@@ -205,7 +209,7 @@ public class SettingsActivity extends AppCompatActivity {
 
                 boolean saveFile = swsave.isChecked();
                 savePref(saveFile);
-                Toast.makeText(SettingsActivity.this, "getting here", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(SettingsActivity.this, saveFile+"", Toast.LENGTH_SHORT).show();
 //
 
             }
@@ -254,17 +258,18 @@ public class SettingsActivity extends AppCompatActivity {
         }
     }
 
-    private int loadSharedPreferences() {
+    private void loadSharedPreferences() {
 
 
         if (sharedpreferences != null) {
-            senser1 = sharedpreferences.getInt(
-                    sensitivity, 0);
+            senser1 = sharedpreferences.getInt(sensitivity, 0);
+            saving = sharedpreferences.getBoolean(savefile, true);
 
         } else {
             senser1 = 1;
+            saving = true;
         }
-        return senser1;
+
 
     }
 }
