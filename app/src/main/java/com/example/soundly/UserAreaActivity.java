@@ -476,7 +476,7 @@ public class UserAreaActivity extends AppCompatActivity implements SensorEventLi
             // display the current x,y,z accelerometer values
 //        displayCurrentValues();
             // display the max x,y,z accelerometer values
-//        displayMaxValues();
+        updateMaxValues();
 
             // get the change of the x,y,z values of the accelerometer
             deltaX = Math.abs(lastX - event.values[0]);
@@ -512,20 +512,20 @@ public class UserAreaActivity extends AppCompatActivity implements SensorEventLi
 //    }
 
     // display the max x,y,z accelerometer values
-//    public void displayMaxValues() {
-//        if (deltaX > deltaXMax) {
-//            deltaXMax = deltaX;
+    public void updateMaxValues() {
+        if (deltaX > deltaXMax) {
+            deltaXMax = deltaX;
 //            maxX.setText(Float.toString(deltaXMax));
-//        }
-//        if (deltaY > deltaYMax) {
-//            deltaYMax = deltaY;
+        }
+        if (deltaY > deltaYMax) {
+            deltaYMax = deltaY;
 //            maxY.setText(Float.toString(deltaYMax));
-//        }
-//        if (deltaZ > deltaZMax) {
-//            deltaZMax = deltaZ;
+        }
+        if (deltaZ > deltaZMax) {
+            deltaZMax = deltaZ;
 //            maxZ.setText(Float.toString(deltaZMax));
-//        }
-//    }
+        }
+    }
     //CONAN PASTE CLOSE
 
     public void spotifyPlayPause(View view){
