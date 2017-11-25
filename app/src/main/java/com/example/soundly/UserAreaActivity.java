@@ -25,6 +25,8 @@ public class UserAreaActivity extends AppCompatActivity {
 
         Button soundly = (Button) findViewById(R.id.bStart);
 
+        Button settings = (Button) findViewById(R.id.bSettings);
+
 
 
         tvGraph.setOnClickListener(new View.OnClickListener() {
@@ -45,6 +47,12 @@ public class UserAreaActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(UserAreaActivity.this, AccelerometerActivity.class));
+            }
+        });
+        settings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(UserAreaActivity.this, SettingsActivity.class));
             }
         });
 
