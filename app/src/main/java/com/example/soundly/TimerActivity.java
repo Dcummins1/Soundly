@@ -17,39 +17,9 @@ import android.widget.Toast;
 public class TimerActivity extends AppCompatActivity {
 
     EditText editText;
-    ProgressBar progressBar;
+//    ProgressBar progressBar;
     Button startButton, stopButton;
     TextView textView;
-
-
-//    AudioManager.OnAudioFocusChangeListener listener = new AudioManager.OnAudioFocusChangeListener() {
-//        @Override
-//        public void onAudioFocusChange(int focusChange) {
-//            //
-//        }
-//    };
-//
-//    // method that pauses music on external apps.
-//    private void forceMusicStop() {
-//        System.out.println("STOPPING MUSIC");
-//        AudioManager am = (AudioManager) this.getSystemService(Context.AUDIO_SERVICE);
-//        if (am.isMusicActive()) {
-//            System.out.println("MUSIC IS ACTIVE");
-//            am.requestAudioFocus(listener, am.STREAM_MUSIC, am.AUDIOFOCUS_GAIN);
-////            Intent intentToStop = new Intent("com.sec.android.app.music.musicservicecommand");
-////            intentToStop.putExtra("command", "pause");
-////            this.sendBroadcast(intentToStop);
-//        }
-//    }
-
-//    public void startService(View view) {
-//        startService(new Intent(getBaseContext(), TimerService.class));
-//    }
-//
-//    // Method to stop the service
-//    public void stopService(View view) {
-//        stopService(new Intent(getBaseContext(), TimerService.class));
-//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +27,7 @@ public class TimerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_timer);
 
         editText = (EditText) findViewById(R.id.editText);
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+//        progressBar = (ProgressBar) findViewById(R.id.progressBar);
         startButton = (Button) findViewById(R.id.startButton);
         stopButton = (Button) findViewById(R.id.stopButton);
         textView = (TextView) findViewById(R.id.textView);
@@ -101,8 +71,8 @@ public class TimerActivity extends AppCompatActivity {
                                 long seconds = l / 1000 % 60;
                                 textView.setText("Time remaining: " + minutes + ":" + seconds);
 
-                                int progress = (int) (l / 1000);
-                                progressBar.setProgress(progress);
+//                                int progress = (int) (l / 1000);
+//                                progressBar.setProgress(progress);
                             }
 
                             @Override
