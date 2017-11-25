@@ -19,7 +19,7 @@ public class UserAreaActivity extends AppCompatActivity {
 
     EditText editText;
     //    ProgressBar progressBar;
-    Button timerButton, stopButton;
+    Button timerButton, stopButton, settings, soundly;
     //timerButton was previously startButton
     TextView textView;
 
@@ -29,13 +29,13 @@ public class UserAreaActivity extends AppCompatActivity {
         setContentView(R.layout.activity_user_area);
         TextView tvGraph = (TextView) findViewById(R.id.tvgraph);
 
-//        Button timer = (Button) findViewById(R.id.bTimer);
-
-        Button soundly = (Button) findViewById(R.id.bStart);
-        editText = (EditText) findViewById(R.id.editText);
-//        progressBar = (ProgressBar) findViewById(R.id.progressBar); <- obsolete
+//        Button soundly = (Button) findViewById(R.id.bStart);
+//        Button settings = (Button) findViewById(R.id.bSettings);
+        soundly = (Button) findViewById(R.id.bStart);
+        settings = (Button) findViewById(R.id.bSettings);
         timerButton = (Button) findViewById(R.id.startButton);
         stopButton = (Button) findViewById(R.id.stopButton);
+        editText = (EditText) findViewById(R.id.editText);
         textView = (TextView) findViewById(R.id.textView);
 
 
