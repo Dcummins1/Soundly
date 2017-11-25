@@ -247,7 +247,7 @@ public class AccelerometerActivity extends Activity implements SensorEventListen
             long currentTime = System.currentTimeMillis();
 
 
-            if(currentTime - startTime > 60000  ){  //60000
+            if(currentTime - startTime > 600 ){  //60000
 //                forceMusicStop();
                 float total = deltaXMax + deltaYMax + deltaZMax;
                 System.out.println(currentTime + "," + total);

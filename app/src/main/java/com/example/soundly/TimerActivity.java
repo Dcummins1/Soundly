@@ -93,7 +93,8 @@ public class TimerActivity extends AppCompatActivity {
                     //Once program has confirmed that there is a valid input put it creates a new CountDownTimer,
                     //sets up the progressBar and "freezes" the editText field.
                     else {
-                        final CountDownTimer countDownTimer = new CountDownTimer(seconds * 60000, 1000) {
+                        final CountDownTimer countDownTimer = new CountDownTimer(seconds * 60000, 1000) //60000//
+                         {
                             @Override
                             public void onTick(long l) {
                                 long minutes = l / 60000;
