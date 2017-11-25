@@ -64,7 +64,7 @@ public class AccelerometerActivity extends Activity implements SensorEventListen
         private float lastTotal2 = 5;
         private float lastTotal3 = 5;
 
-        private int sensitivity = 2;
+        private int sensitivity = 1;
         private double sleepThreshold = 0.15;
 
         private boolean saveFile = true;
@@ -76,8 +76,8 @@ public class AccelerometerActivity extends Activity implements SensorEventListen
         PowerManager.WakeLock wl;
         DevicePolicyManager devicePolicyManager;
         ComponentName componentName;
+        SharedPreferences sharedPreferences;
 
-        SharedPreferences sharedPreferences = this.getPreferences(Context.MODE_PRIVATE);
 
         AudioManager.OnAudioFocusChangeListener listener = new AudioManager.OnAudioFocusChangeListener() {
             @Override
@@ -120,24 +120,28 @@ public class AccelerometerActivity extends Activity implements SensorEventListen
             startTime = System.currentTimeMillis();
             devicePolicyManager = (DevicePolicyManager)getSystemService(Context.DEVICE_POLICY_SERVICE);
             componentName = new ComponentName(this, AdminReceiver.class);
+            sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+
         }
 
         public void getPreferences(){
             this.sensitivity = sharedPreferences.getInt("sensitivity", this.sensitivity);
-            this.saveFile = sharedPreferences.getBoolean("savefile", this.saveFile);
+            this.saveFile = sharedPreferences.getBoolean("saveFile", this.saveFile);
+            System.out.println("Sensitivity at: " + this.sensitivity);
+            System.out.println("Save file at: " + this.saveFile);
+
         }
 
         public void updateSleepThreshold(){
-            if(this.sensitivity == 1){
-                this.sleepThreshold =  0.25;
+            if(this.sensitivity == 0){
+                this.sleepThreshold =  0.2;
             }
-            else if(this.sensitivity == 2){
+            else if(this.sensitivity == 1){
                 this.sleepThreshold = 0.15;
             }
-            else if(this.sensitivity == 3){
+            else if(this.sensitivity == 2){
                 this.sleepThreshold = 0.1;
             }
-            System.out.println("Sensitivity at: " + this.sensitivity);
             System.out.println("Threshold at: " + this.sleepThreshold);
         }
 
@@ -202,25 +206,6 @@ public class AccelerometerActivity extends Activity implements SensorEventListen
 
         }
 
-//        public void readFile(){
-//            try {
-//                BufferedReader bufferedReader = new BufferedReader(new FileReader(new File(getFilesDir() + File.separator + "soundly_output.txt")));
-//                String read;
-//                StringBuilder builder = new StringBuilder("");
-//
-//                while ((read = bufferedReader.readLine()) != null) {
-//                    builder.append(read);
-//                }
-//                System.out.println("Output: " + builder);
-//                bufferedReader.close();
-//            }
-//            catch(IOException e){
-//                System.out.println(e.getMessage());
-//
-//            }
-//        }
-
-
         public void initializeViews() {
             currentX = (TextView) findViewById(R.id.currentX);
             currentY = (TextView) findViewById(R.id.currentY);
@@ -275,11 +260,18 @@ public class AccelerometerActivity extends Activity implements SensorEventListen
                 am.requestAudioFocus(listener, am.STREAM_MUSIC, am.AUDIOFOCUS_GAIN);
                 if(devicePolicyManager.isAdminActive(componentName)) {
 //                    System.out.println("Locking screen");
+                    wl.acquire();
                     devicePolicyManager.lockNow();
                 }
                 else {
 //                    System.out.println("No permission...");
                     checkLockPermission();
+                }
+                if(!saveFile){
+                    System.out.println("Killing Soundly");
+                    System.out.println("PID is: " + android.os.Process.myPid());
+                    android.os.Process.killProcess(android.os.Process.myPid());
+//                    System.exit(1);
                 }
 //            Intent intentToStop = new Intent("com.sec.android.app.music.musicservicecommand");
 //            intentToStop.putExtra("command", "pause");
