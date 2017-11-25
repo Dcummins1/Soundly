@@ -5,8 +5,8 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!--<uses-permission android:name="android.permission.WRite"-->
 
-    <!-- <uses-permission android:name="android.permission.WRite" -->
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -43,21 +43,26 @@
             android:label="@string/title_activity_sleep_graph"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
-                <action android:name="android.intent.action.SYSTEM_TUTORIAL" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".SettingsActivity"
-            android:label="Settings"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            <action android:name="android.intent.action.SYSTEM_TUTORIAL" />
+        </intent-filter></activity>
         <activity
             android:name=".TimerActivity"
-            android:exported="true"></activity>
+            android:exported="true">
+        </activity>
+        <service
+            android:name=".TimerService">
+        </service>
+        <receiver
+            android:name="AdminReceiver"
+            android:permission="android.permission.BIND_DEVICE_ADMIN">
+            <meta-data
+                android:name="android.app.device_admin"
+                android:resource="@xml/device_admin"/>
 
-        <service android:name=".TimerService"></service>
-
-
+            <intent-filter>
+                <action android:name="android.app.action.DEVICE_ADMIN_ENABLED"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

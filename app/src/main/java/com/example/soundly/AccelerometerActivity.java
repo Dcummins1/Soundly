@@ -1,7 +1,9 @@
 package com.example.soundly;
 
 import android.app.Activity;
+import android.app.admin.DevicePolicyManager;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -67,6 +69,8 @@ public class AccelerometerActivity extends Activity implements SensorEventListen
 
         PowerManager pm;
         PowerManager.WakeLock wl;
+        DevicePolicyManager devicePolicyManager;
+        ComponentName componentName;
 
         AudioManager.OnAudioFocusChangeListener listener = new AudioManager.OnAudioFocusChangeListener() {
             @Override
@@ -79,7 +83,7 @@ public class AccelerometerActivity extends Activity implements SensorEventListen
         @Override
         public void onCreate(Bundle savedInstanceState) {
 
-            // keeps running when screen is locked - **WARNING** just for testing.
+            // keeps running when screen is locked
             pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
             wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "MyWakeLock");
 
@@ -107,6 +111,8 @@ public class AccelerometerActivity extends Activity implements SensorEventListen
             }
 
             startTime = System.currentTimeMillis();
+            devicePolicyManager = (DevicePolicyManager)getSystemService(Context.DEVICE_POLICY_SERVICE);
+            componentName = new ComponentName(this, AdminReceiver.class);
         }
 
         public void createOutputFile(String data){
@@ -118,8 +124,6 @@ public class AccelerometerActivity extends Activity implements SensorEventListen
 
             if (yourFile.exists()) {
                 System.out.println("file exists");
-                boolean deleted = yourFile.delete();
-
             }
 
 
@@ -204,6 +208,7 @@ public class AccelerometerActivity extends Activity implements SensorEventListen
         //onResume() register the accelerometer for listening the events
         protected void onResume() {
             super.onResume();
+            checkLockPermission();
             if(wl.isHeld()){
                 wl.release();
             }
@@ -217,13 +222,37 @@ public class AccelerometerActivity extends Activity implements SensorEventListen
 //            sensorManager.unregisterListener(this);
         }
 
-        // method that pauses music on external apps.
+        // checks if app has permission required to lock screen
+        // if not, requests permission
+        public void checkLockPermission() {
+            System.out.println("Checking permissions...");
+            if (devicePolicyManager.isAdminActive(componentName)) {
+                System.out.println("Permissions active...");
+            }
+            else {
+                String device_admin_explanation = "We need your permission to lock your device. This allows Soundly to pause certain media and save your battery.";
+                Intent intent = new Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN);
+                intent.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, componentName);
+                intent.putExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION, device_admin_explanation);
+                startActivity(intent);
+            }
+        }
+
+        // method that pauses music on external apps and locks screen.
         private void forceMusicStop() {
             System.out.println("STOPPING MUSIC");
             AudioManager am = (AudioManager) this.getSystemService(Context.AUDIO_SERVICE);
             if (am.isMusicActive()) {
                 System.out.println("MUSIC IS ACTIVE");
                 am.requestAudioFocus(listener, am.STREAM_MUSIC, am.AUDIOFOCUS_GAIN);
+                if(devicePolicyManager.isAdminActive(componentName)) {
+//                    System.out.println("Locking screen");
+                    devicePolicyManager.lockNow();
+                }
+                else {
+//                    System.out.println("No permission...");
+                    checkLockPermission();
+                }
 //            Intent intentToStop = new Intent("com.sec.android.app.music.musicservicecommand");
 //            intentToStop.putExtra("command", "pause");
 //            this.sendBroadcast(intentToStop);
@@ -247,8 +276,8 @@ public class AccelerometerActivity extends Activity implements SensorEventListen
             long currentTime = System.currentTimeMillis();
 
 
-            if(currentTime - startTime > 600 ){  //60000
-//                forceMusicStop();
+            if(currentTime - startTime > 30000){  //60000
+                forceMusicStop();
                 float total = deltaXMax + deltaYMax + deltaZMax;
                 System.out.println(currentTime + "," + total);
                 writeToTestFile(currentTime + "," + total + "\n");
