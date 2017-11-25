@@ -7,6 +7,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -63,7 +64,11 @@ public class AccelerometerActivity extends Activity implements SensorEventListen
         private float lastTotal2 = 5;
         private float lastTotal3 = 5;
 
-        private final double sleepThreshold = 0.15;
+        private int sensitivity = 2;
+        private double sleepThreshold = 0.15;
+
+        private boolean saveFile = true;
+
 
         private TextView currentX, currentY, currentZ, maxX, maxY, maxZ;
 
@@ -71,6 +76,8 @@ public class AccelerometerActivity extends Activity implements SensorEventListen
         PowerManager.WakeLock wl;
         DevicePolicyManager devicePolicyManager;
         ComponentName componentName;
+
+        SharedPreferences sharedPreferences = this.getPreferences(Context.MODE_PRIVATE);
 
         AudioManager.OnAudioFocusChangeListener listener = new AudioManager.OnAudioFocusChangeListener() {
             @Override
@@ -113,6 +120,25 @@ public class AccelerometerActivity extends Activity implements SensorEventListen
             startTime = System.currentTimeMillis();
             devicePolicyManager = (DevicePolicyManager)getSystemService(Context.DEVICE_POLICY_SERVICE);
             componentName = new ComponentName(this, AdminReceiver.class);
+        }
+
+        public void getPreferences(){
+            this.sensitivity = sharedPreferences.getInt("sensitivity", this.sensitivity);
+            this.saveFile = sharedPreferences.getBoolean("savefile", this.saveFile);
+        }
+
+        public void updateSleepThreshold(){
+            if(this.sensitivity == 1){
+                this.sleepThreshold =  0.25;
+            }
+            else if(this.sensitivity == 2){
+                this.sleepThreshold = 0.15;
+            }
+            else if(this.sensitivity == 3){
+                this.sleepThreshold = 0.1;
+            }
+            System.out.println("Sensitivity at: " + this.sensitivity);
+            System.out.println("Threshold at: " + this.sleepThreshold);
         }
 
         public void createOutputFile(String data){
@@ -209,6 +235,8 @@ public class AccelerometerActivity extends Activity implements SensorEventListen
         protected void onResume() {
             super.onResume();
             checkLockPermission();
+            getPreferences();
+            updateSleepThreshold();
             if(wl.isHeld()){
                 wl.release();
             }
