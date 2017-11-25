@@ -59,6 +59,12 @@ public class UserAreaActivity extends AppCompatActivity {
                 startActivity(new Intent(UserAreaActivity.this, AccelerometerActivity.class));
             }
         });
+        settings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(UserAreaActivity.this, SettingsActivity.class));
+            }
+        });
 
 
         //creates onClickListener for start button.
@@ -133,8 +139,8 @@ public class UserAreaActivity extends AppCompatActivity {
 
     }
 
-    public void spotifyPlayPause(View view) {
-        try {
+    public void spotifyPlayPause(View view){
+        try{
 //        String uri = "spotifyPause:track:0IcSLT53eE07Jmok64Ppo3";
 //        Intent launcher = new Intent( Intent.ACTION_VIEW, Uri.parse(uri) );
 ////        launcher.addFlags(Intent.FLAG_FROM_BACKGROUND);
@@ -157,7 +163,8 @@ public class UserAreaActivity extends AppCompatActivity {
                 i.putExtra(Intent.EXTRA_KEY_EVENT, new KeyEvent(KeyEvent.ACTION_UP, keyCode));
                 sendOrderedBroadcast(i, null);
             }
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             Toast.makeText(this, "Spotify not installed", Toast.LENGTH_LONG).show();
         }
 
@@ -170,7 +177,8 @@ public class UserAreaActivity extends AppCompatActivity {
             launcher.setPackage("com.spotify.music");
 
             sendBroadcast(launcher);
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             Toast.makeText(this, "Spotify not installed", Toast.LENGTH_LONG).show();
         }
     }
@@ -189,5 +197,3 @@ public class UserAreaActivity extends AppCompatActivity {
         }
     }
 }
-
-
