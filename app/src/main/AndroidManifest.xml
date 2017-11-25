@@ -17,7 +17,9 @@
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -26,19 +28,27 @@
         </activity>
         <activity
             android:name=".UserAreaActivity"
-            android:exported="true"/>
+            android:exported="true"
+            android:screenOrientation="portrait"
+            />
         <activity
             android:name=".SignupActivity"
             android:label="@string/title_activity_signup"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"
+            />
         <activity
             android:name=".SettingsActivity"
             android:label="Settings"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"
+            />
         <activity
             android:name=".ResetPasswordActivity"
             android:label="@string/title_activity_reset_password"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"
+            />
         <activity android:name=".AccelerometerActivity">
             <intent-filter>
                 <action android:name="android.intent.action.SYSTEM_TUTORIAL" />
@@ -47,13 +57,17 @@
         <activity
             android:name=".SleepGraph"
             android:label="@string/title_activity_sleep_graph"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"
+            >
             <intent-filter>
             <action android:name="android.intent.action.SYSTEM_TUTORIAL" />
         </intent-filter></activity>
         <activity
             android:name=".TimerActivity"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation="portrait"
+            >
         </activity>
         <service
             android:name=".TimerService">
