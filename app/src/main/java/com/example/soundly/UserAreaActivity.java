@@ -213,7 +213,8 @@ public class UserAreaActivity extends AppCompatActivity implements SensorEventLi
                                 textView.setText("Finished!");
                                 editText.setFocusableInTouchMode(true);
                                 System.out.println("finished");
-                                stopService(new Intent(getBaseContext(), TimerService.class));
+//                                stopService(new Intent(getBaseContext(), TimerService.class));
+                                forceMusicStop();
                             }
                         };
 
@@ -221,7 +222,8 @@ public class UserAreaActivity extends AppCompatActivity implements SensorEventLi
                         countDownTimer.start();
                         editText.setText("");
                         editText.setFocusable(false);
-                        startService(new Intent(getBaseContext(), TimerService.class));
+//                        startService(new Intent(getBaseContext(), TimerService.class));
+
 
                         //cancels timer on stopButton click
                         stopButton.setOnClickListener(new View.OnClickListener() {
@@ -230,7 +232,7 @@ public class UserAreaActivity extends AppCompatActivity implements SensorEventLi
                                 countDownTimer.cancel();
                                 textView.setText("");
                                 editText.setFocusableInTouchMode(true);
-                                stopService(new Intent(getBaseContext(), TimerService.class));
+//                                stopService(new Intent(getBaseContext(), TimerService.class));
                             }
                         });
                     }
