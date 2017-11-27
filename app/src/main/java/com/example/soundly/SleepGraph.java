@@ -122,7 +122,7 @@ public class SleepGraph extends AppCompatActivity {
             series.setDataPointsRadius(5);
             series.setThickness(3);
             graph.getViewport().setMinX(0);
-            graph.getViewport().setMaxX(5);
+            graph.getViewport().setMaxX(i);
             graph.getViewport().setMinY(0);
             graph.getViewport().setMaxY(10.0);
 
