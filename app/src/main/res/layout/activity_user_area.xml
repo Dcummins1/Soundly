@@ -4,71 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.soundly.UserAreaActivity">
-
-    <LinearLayout
-
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@color/colorPrimary"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:padding="@dimen/activity_horizontal_margin"
-        android:weightSum="1"
-        app:layout_constraintRight_toLeftOf="parent"
-        tools:layout_constraintTop_creator="1"
-        tools:layout_constraintRight_creator="1"
-        tools:layout_constraintBottom_creator="1"
-        app:layout_constraintBottom_toTopOf="parent"
-        tools:layout_constraintLeft_creator="1"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent">></LinearLayout>
-
-        <Button
-            android:layout_width="48dp"
-            android:layout_height="45dp"
-            android:id="@+id/playButton"
-            android:background="@drawable/play"
-            android:padding="0dp"
-            android:onClick="spotifyPlayPause"
-            android:layout_marginStart="0dp"
-            android:layout_marginEnd="0dp"
-            tools:layout_constraintBaseline_creator="1"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="83dp"
-            android:layout_marginLeft="8dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/nextButton"
-            android:layout_marginRight="8dp" />
-
-        <Button
-        android:layout_width="52dp"
-        android:layout_height="45dp"
-        android:background="@drawable/stop"
-        android:id="@+id/pauseButton"
-        android:onClick="spotifyPlayPause"
-
-            tools:layout_constraintRight_creator="1"
-            tools:layout_constraintLeft_creator="1"
-            tools:layout_constraintTop_creator="1"
-            android:layout_marginTop="83dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/nextButton"
-            android:layout_marginRight="22dp" />
-
-        <Button
-        android:layout_width="56dp"
-        android:layout_height="46dp"
-        android:background="@drawable/next"
-        android:id="@+id/nextButton"
-        android:onClick="spotifyNext"
-            tools:layout_constraintRight_creator="1"
-            tools:layout_constraintBaseline_creator="1"
-            android:layout_marginEnd="88dp"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="83dp"
-            android:layout_marginRight="8dp"
-            app:layout_constraintRight_toRightOf="parent" />
+    tools:context="com.example.soundly.UserAreaActivity"
+    tools:layout_editor_absoluteY="81dp"
+    tools:layout_editor_absoluteX="0dp">
 
 
     <Button
@@ -76,9 +14,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:background="@android:color/transparent"
         android:clickable="true"
         android:fontFamily="sans-serif-condensed"
@@ -91,7 +26,9 @@
         android:typeface="monospace"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pauseButton" />
+        tools:layout_editor_absoluteY="186dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
 
 
@@ -101,40 +38,22 @@
             android:layout_gravity="right"
         android:src="@mipmap/ic_launcher"
         android:id="@+id/imageView"
-        android:layout_marginRight="60dp"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginLeft="60dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="8dp"
-        app:layout_constraintVertical_bias="0.242"
-        android:layout_marginStart="60dp"
-        android:layout_marginEnd="60dp"
-        tools:layout_constraintRight_creator="1"
-        tools:layout_constraintLeft_creator="1"
-        tools:layout_constraintTop_creator="1"
-        tools:layout_constraintBottom_creator="1"
-        app:layout_constraintHorizontal_bias="0.866" />
+        tools:layout_editor_absoluteY="0dp"
+        tools:layout_editor_absoluteX="-216dp" />
 
 
     <Button
         android:id="@+id/bSettings"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:background="@color/colorAccent"
-        android:text="Settings"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:background="@drawable/settings"
         android:textColor="@color/colorPrimaryDark"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/bStart"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="16dp"
         app:layout_constraintRight_toRightOf="parent"
-        tools:layout_constraintBottom_creator="1"
-        tools:layout_constraintLeft_creator="1"
-        tools:layout_constraintRight_creator="1" />
+        android:layout_marginEnd="16dp" />
 
         <TextView
             android:id="@+id/tvgraph"
@@ -147,92 +66,140 @@
             android:textColor="@color/colorPrimaryDark"
             android:typeface="normal"
             tools:text="View your latest Sleep"
-            android:layout_marginLeft="8dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:layout_marginRight="8dp"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintHorizontal_bias="0.038"
-            tools:layout_constraintRight_creator="1"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            tools:layout_constraintLeft_creator="1"
-            tools:layout_constraintTop_creator="1"
-            android:layout_marginTop="16dp"
-            app:layout_constraintTop_toTopOf="parent" />
+            tools:layout_editor_absoluteY="16dp"
+            tools:layout_editor_absoluteX="16dp" />
 
 
     <Button
         android:id="@+id/bStart"
-        android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:layout_marginBottom="8dp"
+        android:layout_width="260dp"
+        android:layout_height="74dp"
         android:background="@color/colorAccent"
         android:text="Start Soundly"
         android:textColor="@color/colorPrimaryDark"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/textView"
-        app:layout_constraintHorizontal_bias="0.0"
+        tools:layout_editor_absoluteY="315dp"
+        tools:layout_editor_absoluteX="66dp" />
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintHorizontal_bias="0.511"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        tools:layout_constraintBottom_creator="1"
-        tools:layout_constraintLeft_creator="1"
-        tools:layout_constraintRight_creator="1" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="0dp"
-        android:layout_height="30dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:hint="countdown"
-        android:freezesText="true"
-        app:layout_constraintBottom_toTopOf="@+id/editText"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <EditText
-        android:id="@+id/editText"
-        android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:ems="10"
-        android:hint="Enter Time in Minutes"
-        android:inputType="number"
-        app:layout_constraintBottom_toTopOf="@+id/startButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/startButton"
-        android:layout_width="154dp"
-        android:layout_height="50dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginStart="20dp"
-        android:background="@color/colorAccent"
-        android:text="Start Timer"
-        android:textColor="@color/colorPrimaryDark"
-        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_constraintBottom_creator="1"
-        tools:layout_constraintLeft_creator="1"
-        tools:layout_constraintRight_creator="1" />
+        android:layout_marginBottom="8dp"
+        android:weightSum="1">
 
-    <Button
-        android:id="@+id/stopButton"
-        android:layout_width="154dp"
-        android:layout_height="50dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginTop="8dp"
-        android:background="@color/colorAccent"
-        android:text="Cancel"
-        android:textStyle="bold"
-        android:textColor="@color/colorPrimaryDark"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText"/>
+        <TextView
+            android:id="@+id/textView"
+            android:textSize="30sp"
+            android:paddingTop="16dp"
+            android:paddingRight="16dp"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="78dp"
+            android:freezesText="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/Buttons"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="359dp" />
+
+        <EditText
+            android:id="@+id/editText"
+            android:layout_width="123dp"
+            android:layout_height="76dp"
+            android:ems="10"
+            android:hint="Time in Mins"
+            android:inputType="number"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteX="125dp"
+            tools:layout_editor_absoluteY="361dp" />
+
+
+        <LinearLayout
+            android:id="@+id/Buttons"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:orientation="vertical"
+            app:layout_constraintRight_toRightOf="parent"
+            tools:layout_editor_absoluteY="8dp">
+
+            <Button
+                android:id="@+id/startButton"
+                android:layout_width="100dp"
+                android:layout_height="35dp"
+                android:layout_margin="4dp"
+                android:background="@color/colorAccent"
+                android:text="Start Timer"
+                android:textColor="@color/colorPrimaryDark"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:layout_editor_absoluteX="20dp"
+                tools:layout_editor_absoluteY="457dp" />
+
+            <Button
+                android:id="@+id/stopButton"
+                android:layout_width="100dp"
+                android:layout_height="35dp"
+                android:layout_margin="4dp"
+                android:background="@color/colorAccent"
+                android:text="Cancel"
+                android:textColor="@color/colorPrimaryDark"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:layout_editor_absoluteX="266dp"
+                tools:layout_editor_absoluteY="457dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        tools:layout_editor_absoluteY="8dp"
+        tools:layout_editor_absoluteX="8dp"></LinearLayout>
+
+    <LinearLayout
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="@dimen/activity_horizontal_margin"
+        android:weightSum="1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:layout_editor_absoluteY="63dp">>
+
+        <Button
+            android:id="@+id/playButton"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/playpause"
+            android:onClick="spotifyPlayPause"
+            android:padding="8dp"
+            tools:layout_editor_absoluteX="96dp"
+            tools:layout_editor_absoluteY="83dp" />
+
+
+        <Button
+            android:id="@+id/nextButton"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/next"
+            android:onClick="spotifyNext"
+            android:padding="8dp"
+            tools:layout_editor_absoluteX="205dp"
+            tools:layout_editor_absoluteY="83dp" />
+    </LinearLayout>
 
 
 </android.support.constraint.ConstraintLayout>

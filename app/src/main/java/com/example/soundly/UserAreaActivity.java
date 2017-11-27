@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -186,12 +187,16 @@ public class UserAreaActivity extends AppCompatActivity implements SensorEventLi
         timerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                InputMethodManager inputManager = (InputMethodManager)
+                        getSystemService(Context.INPUT_METHOD_SERVICE);
+
+                inputManager.hideSoftInputFromWindow((null == getCurrentFocus()) ? null : getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
 
                 //checks if there is user input; displays toast when no input has been given.
                 if (editText.getText().toString().equals("")) {
                     Context context = getApplicationContext();
                     CharSequence textT = "Please enter time";
-                    int duration = Toast.LENGTH_LONG;
+                    int duration = Toast.LENGTH_SHORT;
 
                     Toast toast = Toast.makeText(context, textT, duration);
                     toast.show();
@@ -219,12 +224,17 @@ public class UserAreaActivity extends AppCompatActivity implements SensorEventLi
                             public void onTick(long l) {
                                 long minutes = l / 60000;
                                 long seconds = l / 1000 % 60;
-                                textView.setText("Time remaining: " + minutes + ":" + seconds);
+                                editText.setVisibility(View.GONE);
+                                textView.setText("" + minutes + ":" + seconds);
+                                textView.setVisibility(View.VISIBLE);
+
                             }
 
                             @Override
                             public void onFinish() {
-                                textView.setText("Finished!");
+                                Toast.makeText(UserAreaActivity.this, "Finished", Toast.LENGTH_LONG).show();
+                                textView.setVisibility(View.GONE);
+                                editText.setVisibility(View.VISIBLE);
                                 editText.setFocusableInTouchMode(true);
                                 System.out.println("finished");
 //                                stopService(new Intent(getBaseContext(), TimerService.class));
@@ -244,7 +254,8 @@ public class UserAreaActivity extends AppCompatActivity implements SensorEventLi
                             @Override
                             public void onClick(View view) {
                                 countDownTimer.cancel();
-                                textView.setText("");
+                                textView.setVisibility(View.GONE);
+                                editText.setVisibility(View.VISIBLE);
                                 editText.setFocusableInTouchMode(true);
 //                                stopService(new Intent(getBaseContext(), TimerService.class));
                             }
@@ -466,7 +477,7 @@ public class UserAreaActivity extends AppCompatActivity implements SensorEventLi
             long currentTime = System.currentTimeMillis();
 
 
-            if (currentTime - startTime > 600) {  //60000
+            if (currentTime - startTime > 60000) {  //60000
 //            forceMusicStop();
                 float total = deltaXMax + deltaYMax + deltaZMax;
                 System.out.println(currentTime + "," + total);
