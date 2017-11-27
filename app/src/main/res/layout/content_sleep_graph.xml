@@ -21,6 +21,22 @@
         android:layout_marginTop="8dp"
         app:layout_constraintVertical_bias="0.498" />
 
+    <ImageView
+    android:layout_width="312dp"
+    android:layout_height="153dp"
+    android:src="@mipmap/ic_launcher"
+    android:id="@+id/imageView"
+    android:layout_marginRight="8dp"
+    app:layout_constraintRight_toRightOf="parent"
+    android:layout_marginLeft="8dp"
+    app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/graph"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="8dp"
+        tools:layout_editor_absoluteX="13dp" />
+
     <TextView
         android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
@@ -29,7 +45,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
-        android:textSize="24sp"
+        android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/graph"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

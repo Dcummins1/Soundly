@@ -16,7 +16,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".LoginActivity"
-            android:label="@string/title_activity_login"
+            android:label="Soundly"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"
             >
@@ -29,11 +29,12 @@
         <activity
             android:name=".UserAreaActivity"
             android:exported="true"
+            android:theme="@style/AppTheme"
             android:screenOrientation="portrait"
             />
         <activity
             android:name=".SignupActivity"
-            android:label="@string/title_activity_signup"
+            android:label=""
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"
             />
@@ -56,8 +57,8 @@
         </activity>
         <activity
             android:name=".SleepGraph"
-            android:label="@string/title_activity_sleep_graph"
-            android:theme="@style/AppTheme.NoActionBar"
+            android:label= "@string/title_activity_sleep_graph"
+            android:theme="@style/AppTheme"
             android:noHistory="true"
             android:screenOrientation="portrait"
             >

@@ -122,7 +122,7 @@ public class UserAreaActivity extends AppCompatActivity implements SensorEventLi
         setContentView(R.layout.activity_user_area);
 
         //@Dan changed tvGraph, soundly and settings slightly
-        tvGraph = (TextView) findViewById(R.id.tvgraph);
+        //tvGraph = (TextView) findViewById(R.id.tvgraph);
         soundly = (Button) findViewById(R.id.bStart);
 //        settings = (Button) findViewById(R.id.bSettings);
         timerButton = (Button) findViewById(R.id.startButton);
@@ -131,12 +131,12 @@ public class UserAreaActivity extends AppCompatActivity implements SensorEventLi
         textView = (TextView) findViewById(R.id.textView);
 
 
-        tvGraph.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(UserAreaActivity.this, SleepGraph.class));
-            }
-        });
+//        tvGraph.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                startActivity(new Intent(UserAreaActivity.this, SleepGraph.class));
+//            }
+//        });
 
 
         soundly.setOnClickListener(new View.OnClickListener() {
@@ -151,7 +151,7 @@ public class UserAreaActivity extends AppCompatActivity implements SensorEventLi
                     soundly.setText("Stop Soundly");
 
                     CharSequence textT = "Soundly Activated";
-                    int duration = Toast.LENGTH_LONG;
+                    int duration = Toast.LENGTH_SHORT;
                     Toast toast = Toast.makeText(context, textT, duration);
                     toast.show();
                 }
@@ -160,7 +160,7 @@ public class UserAreaActivity extends AppCompatActivity implements SensorEventLi
                     soundly.setText("Start Soundly");
                     Context context = getApplicationContext();
                     CharSequence textT = "Soundly Deactivated";
-                    int duration = Toast.LENGTH_LONG;
+                    int duration = Toast.LENGTH_SHORT;
                     Toast toast = Toast.makeText(context, textT, duration);
                     toast.show();
                     lastTotal1 = 1000;
@@ -205,7 +205,7 @@ public class UserAreaActivity extends AppCompatActivity implements SensorEventLi
                     if (seconds == 0) {
                         Context context = getApplicationContext();
                         CharSequence textT = "Please enter valid time input";
-                        int duration = Toast.LENGTH_LONG;
+                        int duration = Toast.LENGTH_SHORT;
 
                         Toast toast = Toast.makeText(context, textT, duration);
                         toast.show();

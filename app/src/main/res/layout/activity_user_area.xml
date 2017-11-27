@@ -4,38 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:textColor="@color/colorPrimaryDark"
     tools:context="com.example.soundly.UserAreaActivity"
     tools:layout_editor_absoluteY="81dp"
     tools:layout_editor_absoluteX="0dp">
 
 
-    <TextView
-        android:id="@+id/tvgraph"
-        android:layout_width="158dp"
-        android:layout_height="26dp"
-        android:layout_marginBottom="16dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_weight="0.11"
-        android:fontFamily="sans-serif"
-        android:lineSpacingExtra="8sp"
-        android:text="Latest Sleep"
-        android:textColor="@color/colorPrimaryDark"
-        android:typeface="normal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.038"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        tools:text="View your latest Sleep" />
+
+
 
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
+        android:background="@color/colorPrimary"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         android:weightSum="1"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -67,7 +49,7 @@
                 android:weightSum="1"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                tools:layout_editor_absoluteY="63dp">>
+                tools:layout_editor_absoluteY="63dp">
 
                 <Button
                     android:id="@+id/playButton"
@@ -100,6 +82,7 @@
                 android:onClick="openSpotify"
                 android:text="Playlist"
                 android:textSize="12dp"
+                android:textColor="@color/colorAccent"
                 android:typeface="monospace"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -130,6 +113,7 @@
             android:layout_marginBottom="30dp"
             android:text="Start Soundly"
             android:textColor="@color/colorPrimaryDark"
+            android:background="@color/colorAccent"
             android:textStyle="bold"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -190,6 +174,7 @@
 
                 <Button
                     android:id="@+id/startButton"
+                    android:background="@color/colorAccent"
                     android:layout_width="100dp"
                     android:layout_height="35dp"
                     android:layout_margin="4dp"
@@ -202,6 +187,7 @@
 
                 <Button
                     android:id="@+id/stopButton"
+                    android:background="@color/colorAccent"
                     android:layout_width="100dp"
                     android:layout_height="35dp"
                     android:layout_margin="4dp"

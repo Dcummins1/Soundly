@@ -166,7 +166,7 @@ public class SettingsActivity extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()) {
-                                        Toast.makeText(SettingsActivity.this, "Your profile is deleted:( Create a account now!", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(SettingsActivity.this, "Your profile is deleted. Create an account", Toast.LENGTH_SHORT).show();
                                         startActivity(new Intent(SettingsActivity.this, SignupActivity.class));
                                         finish();
                                         progressBar.setVisibility(View.GONE);

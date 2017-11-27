@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+
     <item android:title="Home" android:id="@+id/menu_home"></item>
     <item android:title="Settings" android:id="@+id/menu_settings"></item>
     <item android:title="Sleep Graph" android:id="@+id/menu_sleep_graph"></item>
