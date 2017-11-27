@@ -3,6 +3,6 @@
     <item android:title="Home" android:id="@+id/menu_home"></item>
     <item android:title="Settings" android:id="@+id/menu_settings"></item>
     <item android:title="Sleep Graph" android:id="@+id/menu_sleep_graph"></item>
-    <!--<item android:title="Settings" android:id="@+id/menu_settings"></item>-->
+    <!--<item android:title="Playlist" android:id="@+id/playlist"></item>-->
     <item android:title="Sign Out" android:id="@+id/menu_sign_out"></item>
 </menu>

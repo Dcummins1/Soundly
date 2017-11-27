@@ -25,7 +25,7 @@ import com.google.firebase.auth.FirebaseUser;
 public class SettingsActivity extends AppCompatActivity {
 
     SharedPreferences sharedpreferences;
-    private Button btnChangePassword, btnRemoveUser, signOut, changePassword;
+    private Button btnChangePassword, btnRemoveUser, changePassword;
     private EditText password, newPassword;
     private ProgressBar progressBar;
     private SeekBar slide;
@@ -68,7 +68,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         btnChangePassword = (Button) findViewById(R.id.bChangePassword);
         btnRemoveUser = (Button) findViewById(R.id.bDeleteUser);
-        signOut = (Button) findViewById(R.id.bLogout);
+
 
         password = (EditText) findViewById(R.id.etPassword);
         newPassword = (EditText) findViewById(R.id.etnewPassword);
@@ -180,12 +180,7 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
-        signOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                signOut();
-            }
-        });
+
 
 
 //        slide.onProgressChanged(new View.OnClickListener() {
@@ -299,11 +294,9 @@ public class SettingsActivity extends AppCompatActivity {
                 startActivity(intent);
                 break;
             case R.id.menu_sign_out:
-                Toast.makeText(this, "Sign Out", Toast.LENGTH_LONG).show();
-                // Dan, sign out method here :)
-//                (MainActivity.mAuth).getInstance().signOut();
-//                startActivity(new Intent(this, MainActivity.class));
-//                finish();
+                signOut();
+                intent = new Intent(this, LoginActivity.class);
+                startActivity(intent);
                 break;
             default:
                 return super.onOptionsItemSelected(item);

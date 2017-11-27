@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.GridLabelRenderer;
 import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
@@ -40,6 +41,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class SleepGraph extends AppCompatActivity {
+    private FirebaseAuth auth;
     Calendar calendar = Calendar.getInstance();
     String minute1;
     TextView title;
@@ -53,6 +55,7 @@ public class SleepGraph extends AppCompatActivity {
     int i =0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        auth = FirebaseAuth.getInstance();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sleep_graph);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -238,6 +241,10 @@ public class SleepGraph extends AppCompatActivity {
         }
     }
 
+    public void signOut() {
+        auth.signOut();
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -262,11 +269,9 @@ public class SleepGraph extends AppCompatActivity {
 //                startActivity(intent);
                 break;
             case R.id.menu_sign_out:
-                Toast.makeText(this, "Sign Out", Toast.LENGTH_LONG).show();
-                // Dan, sign out method here :)
-//                (MainActivity.mAuth).getInstance().signOut();
-//                startActivity(new Intent(this, MainActivity.class));
-//                finish();
+                signOut();
+                intent = new Intent(this, LoginActivity.class);
+                startActivity(intent);
                 break;
             default:
                 return super.onOptionsItemSelected(item);

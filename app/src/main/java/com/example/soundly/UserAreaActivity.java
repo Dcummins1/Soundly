@@ -43,6 +43,8 @@ import android.util.Log;
 //
 //import java.io.BufferedReader;
 //import java.io.BufferedWriter;
+import com.google.firebase.auth.FirebaseAuth;
+
 import java.io.File;
 import java.io.FileOutputStream;
 //import java.io.FileReader;
@@ -57,7 +59,7 @@ import java.util.Date;
 //CONAN PASTE CLOSE
 
 public class UserAreaActivity extends AppCompatActivity implements SensorEventListener {
-
+    private FirebaseAuth auth;
     EditText editText;
     Button timerButton, stopButton, settings, soundly;
     TextView textView, tvGraph;
@@ -115,13 +117,14 @@ public class UserAreaActivity extends AppCompatActivity implements SensorEventLi
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        auth = FirebaseAuth.getInstance();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_area);
 
         //@Dan changed tvGraph, soundly and settings slightly
         tvGraph = (TextView) findViewById(R.id.tvgraph);
         soundly = (Button) findViewById(R.id.bStart);
-        settings = (Button) findViewById(R.id.bSettings);
+//        settings = (Button) findViewById(R.id.bSettings);
         timerButton = (Button) findViewById(R.id.startButton);
         stopButton = (Button) findViewById(R.id.stopButton);
         editText = (EditText) findViewById(R.id.editText);
@@ -142,19 +145,8 @@ public class UserAreaActivity extends AppCompatActivity implements SensorEventLi
 //                startActivity(new Intent(UserAreaActivity.this, AccelerometerActivity.class));
                 if(soundly.getText().equals("Start Soundly")){
                     Date date = new Date();
-
-
                     Context context = getApplicationContext();
-                    Toast.makeText(context, "making file", Toast.LENGTH_LONG).show();
-
                     createOutputFile(date.toString() + "\n");
-//                System.out.println(date.toString());
-
-//                    if(! wl.isHeld()){
-//
-//                        createOutputFile(date.toString() + "\n");
-////                System.out.println(date.toString());
-//                    }
                     soundlyOn = true;
                     soundly.setText("Stop Soundly");
 
@@ -178,12 +170,12 @@ public class UserAreaActivity extends AppCompatActivity implements SensorEventLi
 
             }
         });
-        settings.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(UserAreaActivity.this, SettingsActivity.class));
-            }
-        });
+//        settings.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                startActivity(new Intent(UserAreaActivity.this, SettingsActivity.class));
+//            }
+//        });
 
 
         //creates onClickListener for start button.
@@ -286,15 +278,9 @@ public class UserAreaActivity extends AppCompatActivity implements SensorEventLi
             sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
         } else {
             // fail! we don't have an accelerometer!
+            Toast.makeText(this, "You need an accelerometer for soundly", Toast.LENGTH_SHORT).show();
         }
-//        Date date = new Date();
-//
-//        if(! wl.isHeld()){
-//            Toast.makeText(this, "making file", Toast.LENGTH_LONG).show();
-//
-//            createOutputFile(date.toString() + "\n");
-////                System.out.println(date.toString());
-//        }
+
 
         startTime = System.currentTimeMillis();
         devicePolicyManager = (DevicePolicyManager)getSystemService(Context.DEVICE_POLICY_SERVICE);
@@ -615,7 +601,9 @@ public class UserAreaActivity extends AppCompatActivity implements SensorEventLi
             Toast.makeText(this, "Spotify not installed", Toast.LENGTH_LONG).show();
         }
     }
-
+    public void signOut() {
+        auth.signOut();
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -640,11 +628,9 @@ public class UserAreaActivity extends AppCompatActivity implements SensorEventLi
                 startActivity(intent);
                 break;
             case R.id.menu_sign_out:
-                Toast.makeText(this, "Sign Out", Toast.LENGTH_LONG).show();
-                // Dan, sign out method here :)
-//                (MainActivity.mAuth).getInstance().signOut();
-//                startActivity(new Intent(this, MainActivity.class));
-//                finish();
+                signOut();
+                intent = new Intent(this, LoginActivity.class);
+                startActivity(intent);
                 break;
             default:
                 return super.onOptionsItemSelected(item);
