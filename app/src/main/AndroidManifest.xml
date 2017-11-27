@@ -58,6 +58,7 @@
             android:name=".SleepGraph"
             android:label="@string/title_activity_sleep_graph"
             android:theme="@style/AppTheme.NoActionBar"
+            android:noHistory="true"
             android:screenOrientation="portrait"
             >
             <intent-filter>
