@@ -13,11 +13,11 @@
         android:label="Soundly"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/MaterialTheme">
+        android:theme="@style/AppTheme">
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login"
-            android:theme="@style/MaterialTheme"
+            android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"
             >
             <intent-filter>
@@ -34,19 +34,19 @@
         <activity
             android:name=".SignupActivity"
             android:label="@string/title_activity_signup"
-            android:theme="@style/MaterialTheme"
+            android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"
             />
         <activity
             android:name=".SettingsActivity"
             android:label="Settings"
-            android:theme="@style/MaterialTheme"
+            android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"
             />
         <activity
             android:name=".ResetPasswordActivity"
             android:label="@string/title_activity_reset_password"
-            android:theme="@style/MaterialTheme"
+            android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"
             />
         <activity android:name=".AccelerometerActivity">
@@ -57,7 +57,7 @@
         <activity
             android:name=".SleepGraph"
             android:label="@string/title_activity_sleep_graph"
-            android:theme="@style/MaterialTheme"
+            android:theme="@style/AppTheme.NoActionBar"
             android:noHistory="true"
             android:screenOrientation="portrait"
             >
