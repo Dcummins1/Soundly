@@ -16,33 +16,18 @@ import android.widget.Toast;
 import static android.provider.AlarmClock.EXTRA_MESSAGE;
 
 //CONAN PASTE OPEN
-//import android.app.Activity;
 import android.app.admin.DevicePolicyManager;
-//import android.content.BroadcastReceiver;
 import android.content.ComponentName;
-//import android.content.Context;
-//import android.content.Intent;
-//import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.media.AudioManager;
-//import android.os.Bundle;
-//import android.os.Environment;
 import android.os.PowerManager;
-//import android.os.SystemClock;
 import android.util.Log;
-//import android.widget.TextView;
-//import android.widget.Toast;
-//
-//import java.io.BufferedReader;
-//import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
-//import java.io.FileReader;
-//import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.Date;
@@ -92,14 +77,11 @@ public class UserAreaActivity extends AppCompatActivity implements SensorEventLi
     private boolean saveFile = true;
     private boolean soundlyOn = false;
 
-//    private TextView currentX, currentY, currentZ, maxX, maxY, maxZ;
-
     PowerManager pm;
     PowerManager.WakeLock wl;
     DevicePolicyManager devicePolicyManager;
     ComponentName componentName;
     SharedPreferences sharedPreferences;
-
 
     AudioManager.OnAudioFocusChangeListener listener = new AudioManager.OnAudioFocusChangeListener() {
         @Override
@@ -412,12 +394,10 @@ public class UserAreaActivity extends AppCompatActivity implements SensorEventLi
             System.out.println("MUSIC IS ACTIVE");
             am.requestAudioFocus(listener, am.STREAM_MUSIC, am.AUDIOFOCUS_GAIN);
             if(devicePolicyManager.isAdminActive(componentName)) {
-//                    System.out.println("Locking screen");
                 wl.acquire();
                 devicePolicyManager.lockNow();
             }
             else {
-//                    System.out.println("No permission...");
                 checkLockPermission();
             }
             if(!saveFile){
@@ -426,9 +406,6 @@ public class UserAreaActivity extends AppCompatActivity implements SensorEventLi
                 android.os.Process.killProcess(android.os.Process.myPid());
 //                    System.exit(1);
             }
-//            Intent intentToStop = new Intent("com.sec.android.app.music.musicservicecommand");
-//            intentToStop.putExtra("command", "pause");
-//            this.sendBroadcast(intentToStop);
         }
     }
 
@@ -451,11 +428,9 @@ public class UserAreaActivity extends AppCompatActivity implements SensorEventLi
 
 
             if (currentTime - startTime > 60000) {  //60000
-//            forceMusicStop();
                 float total = deltaXMax + deltaYMax + deltaZMax;
                 System.out.println(currentTime + "," + total);
                 writeToTestFile(currentTime + "," + total + "\n");
-//                readFile();
                 deltaXMax = 0;
                 deltaYMax = 0;
                 deltaZMax = 0;
@@ -471,11 +446,6 @@ public class UserAreaActivity extends AppCompatActivity implements SensorEventLi
 
             }
 
-            // clean current values
-//        displayCleanValues();
-            // display the current x,y,z accelerometer values
-//        displayCurrentValues();
-            // display the max x,y,z accelerometer values
         updateMaxValues();
 
             // get the change of the x,y,z values of the accelerometer
@@ -487,43 +457,19 @@ public class UserAreaActivity extends AppCompatActivity implements SensorEventLi
             lastX = event.values[0];
             lastY = event.values[1];
             lastZ = event.values[2];
-
-            // ignore small changes
-//            if (deltaX < 2)
-//                deltaX = 0;
-//            if (deltaY < 2)
-//                deltaY = 0;
-//            if (deltaZ < 2)
-//                deltaX = 0;
         }
     }
 
-//    public void displayCleanValues() {
-//        currentX.setText("0.0");
-//        currentY.setText("0.0");
-//        currentZ.setText("0.0");
-//    }
-//
-//    // display the current x,y,z accelerometer values
-//    public void displayCurrentValues() {
-//        currentX.setText(Float.toString(deltaX));
-//        currentY.setText(Float.toString(deltaY));
-//        currentZ.setText(Float.toString(deltaZ));
-//    }
-
-    // display the max x,y,z accelerometer values
+    // update the max x,y,z accelerometer values
     public void updateMaxValues() {
         if (deltaX > deltaXMax) {
             deltaXMax = deltaX;
-//            maxX.setText(Float.toString(deltaXMax));
         }
         if (deltaY > deltaYMax) {
             deltaYMax = deltaY;
-//            maxY.setText(Float.toString(deltaYMax));
         }
         if (deltaZ > deltaZMax) {
             deltaZMax = deltaZ;
-//            maxZ.setText(Float.toString(deltaZMax));
         }
     }
     //CONAN PASTE CLOSE
