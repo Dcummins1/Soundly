@@ -475,7 +475,7 @@ public class UserAreaActivity extends AppCompatActivity implements SensorEventLi
 //        displayCleanValues();
             // display the current x,y,z accelerometer values
 //        displayCurrentValues();
-            // display the max x,y,z accelerometer values
+            // updates the max x,y,z accelerometer values
         updateMaxValues();
 
             // get the change of the x,y,z values of the accelerometer
