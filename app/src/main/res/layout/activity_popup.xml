@@ -1,26 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.example.soundly.PopupActivity">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:background="@android:color/background_light"
+    android:layout_margin="1dp">
 
-    <TextView
-        android:id="@+id/text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="56dp"
-        android:text="Popup Window will display on this Activity" />
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:background="@color/colorAccent">
 
-    <Button
-        android:id="@+id/popupbutton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:text="Show Popup" />
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical"
+            android:layout_margin="20dp">
 
-</android.support.constraint.ConstraintLayout>
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Welcome to Soundly!\n\n Soundly uses your device's built-in motion sensor to detect your movement. From analysing your movement patterns, we can tell when you have fallen asleep. Once Soundly detects that you've fallen asleep it will automatically pause any media that is still running to help you save battery life and to ensure that you do not get interrupted during your sleep.\n\n To use Soundly, simply click the “Start Soundly” button and place the phone on the mattress beside you. In the “Settings” section you can refine the sensitivity based on your mattress type (the harder the mattress the lower the sensitivity should be set).\n\n Soundly will continue to monitor your movement after it has turned off any running media applications. This allows us to present you with a graph showing your movement throughout the night. If you do not want Soundly to continue the measurement of your movements simply turn off the “Save File” setting in the Settings page.\n\n Soundly also comes with a standard Countdown Timer that allows you to set a time in minutes after which you want Soundly to stop any media apps that are running. You can use the main Soundly functionality in parallel with the timer. Soundly will then stop media playback either when it has detected that you have fallen asleep or when the timer runs to zero.\n\n Finally, to check your previous night’s sleeping pattern just select the “Sleep Graph” option from the menu.\n\n" />
+
+            <Button
+                android:id="@+id/dismiss"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Got it." />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>
+
+<!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
+    <!--xmlns:tools="http://schemas.android.com/tools"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--tools:context="com.example.soundly.PopupActivity">-->
+
+    <!--<TextView-->
+        <!--android:id="@+id/text"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_alignParentTop="true"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:layout_marginTop="56dp"-->
+        <!--android:text="Popup Window will display on this Activity" />-->
+
+    <!--&lt;!&ndash;<TextView&ndash;&gt;-->
+        <!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:layout_height="match_parent" />&ndash;&gt;-->
+
+    <!--<Button-->
+        <!--android:id="@+id/popupbutton"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:layout_centerVertical="true"-->
+        <!--android:text="Show Popup" />-->
+
+    <!--<RelativeLayout-->
+        <!--android:id="@+id/bac_dim_layout"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:background="#C0000000"-->
+        <!--android:visibility="gone" >-->
+    <!--</RelativeLayout>-->
+
+<!--</android.support.constraint.ConstraintLayout>-->

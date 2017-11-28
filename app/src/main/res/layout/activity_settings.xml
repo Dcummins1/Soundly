@@ -9,6 +9,13 @@
     tools:layout_editor_absoluteY="81dp"
     tools:layout_editor_absoluteX="0dp">
 
+    <TextView
+        android:id="@+id/ancor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="0dp"
+        />
+
     <ImageView
         android:layout_width="347dp"
         android:layout_height="173dp"

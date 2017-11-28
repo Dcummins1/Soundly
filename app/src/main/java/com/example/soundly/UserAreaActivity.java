@@ -2,11 +2,14 @@ package com.example.soundly;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,6 +17,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -61,8 +66,9 @@ import java.util.Date;
 public class UserAreaActivity extends AppCompatActivity implements SensorEventListener {
     private FirebaseAuth auth;
     EditText editText;
-    Button timerButton, stopButton, settings, soundly;
-    TextView textView, tvGraph;
+    Button timerButton, stopButton, settings, soundly, btnDismiss, btnOpenPopup;
+    TextView textView, tvGraph, ancor;
+    LinearLayout linearLayoutTop;
 
     //CONAN PASTE OPEN
     private float lastX, lastY, lastZ;
@@ -129,6 +135,9 @@ public class UserAreaActivity extends AppCompatActivity implements SensorEventLi
         stopButton = (Button) findViewById(R.id.stopButton);
         editText = (EditText) findViewById(R.id.editText);
         textView = (TextView) findViewById(R.id.textView);
+//        btnOpenPopup = (Button)findViewById(R.id.openpopup);
+        linearLayoutTop = (LinearLayout) findViewById(R.id.linearLayoutTop);
+        ancor = (TextView) findViewById(R.id.ancor);
 
 
 //        tvGraph.setOnClickListener(new View.OnClickListener() {
@@ -610,6 +619,25 @@ public class UserAreaActivity extends AppCompatActivity implements SensorEventLi
         return true;
     }
 
+    public void popUP(){
+        LayoutInflater layoutInflater = (LayoutInflater)getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
+        View popupView = layoutInflater.inflate(R.layout.activity_popup, null);
+        final PopupWindow popupWindow = new PopupWindow(popupView, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+        btnDismiss = (Button) popupView.findViewById(R.id.dismiss);
+        btnDismiss.setOnClickListener(new Button.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                popupWindow.dismiss();
+            }
+        });
+
+        popupWindow.showAsDropDown(ancor, 60,0);
+        popupWindow.setOutsideTouchable(false);
+
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent;
@@ -631,6 +659,9 @@ public class UserAreaActivity extends AppCompatActivity implements SensorEventLi
                 signOut();
                 intent = new Intent(this, LoginActivity.class);
                 startActivity(intent);
+                break;
+            case R.id.menu_about:
+                popUP();
                 break;
             default:
                 return super.onOptionsItemSelected(item);

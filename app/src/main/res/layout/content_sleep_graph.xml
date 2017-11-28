@@ -8,6 +8,13 @@
     tools:context="com.example.soundly.SleepGraph"
     tools:showIn="@layout/activity_sleep_graph">
 
+    <TextView
+        android:id="@+id/ancor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="0dp"
+        />
+
 
     <com.jjoe64.graphview.GraphView
         android:layout_width="368dp"

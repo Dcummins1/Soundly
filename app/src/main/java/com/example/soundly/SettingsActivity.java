@@ -6,11 +6,14 @@ import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.Switch;
@@ -25,11 +28,11 @@ import com.google.firebase.auth.FirebaseUser;
 public class SettingsActivity extends AppCompatActivity {
 
     SharedPreferences sharedpreferences;
-    private Button btnChangePassword, btnRemoveUser, changePassword;
+    private Button btnChangePassword, btnRemoveUser, changePassword, btnDismiss;
     private EditText password, newPassword;
     private ProgressBar progressBar;
     private SeekBar slide;
-    private TextView save;
+    private TextView save, ancor;
     private TextView sense;
     private Switch swsave;
     private FirebaseAuth.AuthStateListener authListener;
@@ -74,6 +77,7 @@ public class SettingsActivity extends AppCompatActivity {
         newPassword = (EditText) findViewById(R.id.etnewPassword);
         save = (TextView) findViewById(R.id.tvSave);
         sense = (TextView) findViewById(R.id.tvSense);
+        ancor = (TextView) findViewById(R.id.ancor);
         slide = (SeekBar) findViewById(R.id.seekBar);
         loadSharedPreferences();
         swsave.setChecked(saving);
@@ -276,6 +280,25 @@ public class SettingsActivity extends AppCompatActivity {
         return true;
     }
 
+    public void popUP(){
+        LayoutInflater layoutInflater = (LayoutInflater)getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
+        View popupView = layoutInflater.inflate(R.layout.activity_popup, null);
+        final PopupWindow popupWindow = new PopupWindow(popupView, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+        btnDismiss = (Button) popupView.findViewById(R.id.dismiss);
+        btnDismiss.setOnClickListener(new Button.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                popupWindow.dismiss();
+            }
+        });
+
+        popupWindow.showAsDropDown(ancor, 60,0);
+        popupWindow.setOutsideTouchable(false);
+
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent;
@@ -297,6 +320,9 @@ public class SettingsActivity extends AppCompatActivity {
                 signOut();
                 intent = new Intent(this, LoginActivity.class);
                 startActivity(intent);
+                break;
+            case R.id.menu_about:
+                popUP();
                 break;
             default:
                 return super.onOptionsItemSelected(item);
