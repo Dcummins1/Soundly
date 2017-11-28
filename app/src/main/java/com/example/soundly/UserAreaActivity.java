@@ -103,6 +103,7 @@ public class UserAreaActivity extends AppCompatActivity implements SensorEventLi
 
     private boolean saveFile;
     private boolean soundlyOn = false;
+    String seconds1;
 
 //    private TextView currentX, currentY, currentZ, maxX, maxY, maxZ;
 
@@ -228,8 +229,12 @@ public class UserAreaActivity extends AppCompatActivity implements SensorEventLi
                             public void onTick(long l) {
                                 long minutes = l / 60000;
                                 long seconds = l / 1000 % 60;
+                                if (seconds < 10){
+                                    seconds1 = "0"+String.valueOf(seconds);
+                                }
+                                else{ seconds1 = String.valueOf(seconds); }
                                 editText.setVisibility(View.GONE);
-                                textView.setText("" + minutes + ":" + seconds);
+                                textView.setText("" + minutes + ":" + seconds1);
                                 textView.setVisibility(View.VISIBLE);
 
                             }
