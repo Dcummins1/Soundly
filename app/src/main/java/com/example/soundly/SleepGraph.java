@@ -9,9 +9,13 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,8 +49,10 @@ public class SleepGraph extends AppCompatActivity {
     Calendar calendar = Calendar.getInstance();
     String minute1;
     TextView title;
+    TextView ancor;
     String label;
     Long millis;
+    Button btnDismiss;
     public static ArrayList<String> x_axis=new ArrayList<String>();
     public static ArrayList<String> labelList=new ArrayList<String>();
     public static ArrayList<String> y_axis=new ArrayList<String>();
@@ -62,6 +68,8 @@ public class SleepGraph extends AppCompatActivity {
 //        setSupportActionBar(toolbar);
 
         title = (TextView) findViewById(R.id.tvTitle);
+        ancor = (TextView) findViewById(R.id.ancor);
+
 
     }
     public void onPause() {
@@ -251,6 +259,25 @@ public class SleepGraph extends AppCompatActivity {
         return true;
     }
 
+    public void popUP(){
+        LayoutInflater layoutInflater = (LayoutInflater)getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
+        View popupView = layoutInflater.inflate(R.layout.activity_popup, null);
+        final PopupWindow popupWindow = new PopupWindow(popupView, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+        btnDismiss = (Button) popupView.findViewById(R.id.dismiss);
+        btnDismiss.setOnClickListener(new Button.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                popupWindow.dismiss();
+            }
+        });
+
+        popupWindow.showAsDropDown(ancor, 60,0);
+        popupWindow.setOutsideTouchable(false);
+
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent;
@@ -272,6 +299,9 @@ public class SleepGraph extends AppCompatActivity {
                 signOut();
                 intent = new Intent(this, LoginActivity.class);
                 startActivity(intent);
+                break;
+            case R.id.menu_about:
+                popUP();
                 break;
             default:
                 return super.onOptionsItemSelected(item);

@@ -10,11 +10,8 @@
     tools:layout_editor_absoluteX="0dp">
 
 
-
-
-
-
     <LinearLayout
+        android:id="@+id/linearLayoutTop"
         android:background="@color/colorPrimary"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -26,6 +23,13 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0">
+
+        <TextView
+            android:id="@+id/ancor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            />
 
         <LinearLayout
             android:id="@+id/linearLayout3"

@@ -6,4 +6,5 @@
     <item android:title="Sleep Graph" android:id="@+id/menu_sleep_graph"></item>
     <!--<item android:title="Playlist" android:id="@+id/playlist"></item>-->
     <item android:title="Sign Out" android:id="@+id/menu_sign_out"></item>
+    <item android:title="About" android:id="@+id/menu_about"></item>
 </menu>
