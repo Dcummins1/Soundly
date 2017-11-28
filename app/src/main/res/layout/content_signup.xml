@@ -36,7 +36,7 @@
                 android:inputType="textEmailAddress"
                 android:maxLines="1"
                 android:singleLine="true"
-                android:textColor="@android:color/white" />
+                android:textColor="@android:color/darker_gray" />
 
         </android.support.design.widget.TextInputLayout>
 
@@ -88,7 +88,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dip"
             android:background="@null"
-            android:text="Alreadr registered? Login"
+            android:text="Already registered? Login"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="15dp" />
