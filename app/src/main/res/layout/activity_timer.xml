@@ -69,10 +69,24 @@
             android:id="@+id/stopButton"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="150dp"
+            android:layout_marginBottom="28dp"
             android:text="Cancel"
             android:background="@color/colorAccent"
             android:textColor="@android:color/black" />
+
+        <Button
+            android:id="@+id/popupbutton"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="show pop-up"
+            android:background="@color/colorAccent"
+            android:textColor="@android:color/black" />
+
+
+        <!--<fragment android:name="com.example.soundly.InstructionsFragment"-->
+            <!--android:id="@+id/fragment_instructions"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"/>-->
 
     </LinearLayout>
 

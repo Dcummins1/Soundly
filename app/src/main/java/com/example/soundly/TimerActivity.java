@@ -1,5 +1,7 @@
 package com.example.soundly;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
@@ -10,6 +12,8 @@ import android.text.Editable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,19 +22,53 @@ public class TimerActivity extends AppCompatActivity {
 
     EditText editText;
 //    ProgressBar progressBar;
-    Button startButton, stopButton;
-    TextView textView;
+    Button startButton, stopButton, popupButton, insidePopupButton;
+    TextView textView, popupText;
+    LinearLayout layoutOfPopup;
+    PopupWindow popupMessage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timer);
 
+//        init();
+
+        popupButton = (Button) findViewById(R.id.popupbutton);
+        popupText = new TextView(this);
+        insidePopupButton = new Button(this);
+        layoutOfPopup = new LinearLayout(this);
+        insidePopupButton.setText("OK");
+        popupText.setText("This is Popup Window.press OK to dismiss         it.");
+        popupText.setPadding(0, 0, 0, 20);
+        layoutOfPopup.setOrientation(LinearLayout.VERTICAL);
+        layoutOfPopup.addView(popupText);
+        layoutOfPopup.addView(insidePopupButton);
+        popupMessage = new PopupWindow(layoutOfPopup, LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        popupMessage.setContentView(layoutOfPopup);
+
+//        popupInit();
+
+        popupButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                popupMessage.showAsDropDown(popupButton, 0, 0);
+            }
+        });
+
+        insidePopupButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                popupMessage.dismiss();
+            }
+        });
+
         editText = (EditText) findViewById(R.id.editText);
 //        progressBar = (ProgressBar) findViewById(R.id.progressBar);
         startButton = (Button) findViewById(R.id.startButton);
         stopButton = (Button) findViewById(R.id.stopButton);
         textView = (TextView) findViewById(R.id.textView);
+//        fragmentButton = (Button) findViewById(R.id.fragmentButton);
 
         //creates onClickListener for start button.
         startButton.setOnClickListener(new View.OnClickListener() {
@@ -106,4 +144,24 @@ public class TimerActivity extends AppCompatActivity {
             }
         });
     }
+
+//    public void init() {
+//        popupButton = (Button) findViewById(R.id.popupbutton);
+//        popupText = new TextView(this);
+//        insidePopupButton = new Button(this);
+//        layoutOfPopup = new LinearLayout(this);
+//        insidePopupButton.setText("OK");
+//        popupText.setText("This is Popup Window.press OK to dismiss         it.");
+//        popupText.setPadding(0, 0, 0, 20);
+//        layoutOfPopup.setOrientation(1);
+//        layoutOfPopup.addView(popupText);
+//        layoutOfPopup.addView(insidePopupButton);
+//    }
+
+//    public void popupInit() {
+//        insidePopupButton.setOnClickListener((View.OnClickListener) this);
+//        popupMessage = new PopupWindow(layoutOfPopup, LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+//        popupMessage.setContentView(layoutOfPopup);
+//    }
+
 }
