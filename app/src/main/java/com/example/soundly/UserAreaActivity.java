@@ -623,7 +623,8 @@ public class UserAreaActivity extends AppCompatActivity implements SensorEventLi
         LayoutInflater layoutInflater = (LayoutInflater)getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
         View popupView = layoutInflater.inflate(R.layout.activity_popup, null);
         final PopupWindow popupWindow = new PopupWindow(popupView, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-
+        popupWindow.setOutsideTouchable(true);
+        popupWindow.setFocusable(true);
         btnDismiss = (Button) popupView.findViewById(R.id.dismiss);
         btnDismiss.setOnClickListener(new Button.OnClickListener(){
             @Override
