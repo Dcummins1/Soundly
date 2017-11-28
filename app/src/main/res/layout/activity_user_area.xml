@@ -4,235 +4,206 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.soundly.UserAreaActivity">
+    android:textColor="@color/colorPrimaryDark"
+    tools:context="com.example.soundly.UserAreaActivity"
+    tools:layout_editor_absoluteY="81dp"
+    tools:layout_editor_absoluteX="0dp">
+
+
+
+
+
 
     <LinearLayout
-
-        android:layout_width="0dp"
-        android:layout_height="0dp"
         android:background="@color/colorPrimary"
-        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="@dimen/activity_horizontal_margin"
         android:weightSum="1"
-        app:layout_constraintRight_toLeftOf="parent"
-        tools:layout_constraintTop_creator="1"
-        tools:layout_constraintRight_creator="1"
-        tools:layout_constraintBottom_creator="1"
-        app:layout_constraintBottom_toTopOf="parent"
-        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent">></LinearLayout>
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
-        <Button
-            android:layout_width="48dp"
-            android:layout_height="45dp"
-            android:id="@+id/playButton"
-            android:background="@drawable/play"
-            android:padding="0dp"
-            android:onClick="spotifyPlayPause"
-            android:layout_marginStart="0dp"
-            android:layout_marginEnd="0dp"
-            tools:layout_constraintBaseline_creator="1"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="83dp"
-            android:layout_marginLeft="8dp"
+        <LinearLayout
+            android:id="@+id/linearLayout3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="8dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@+id/imageView"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/nextButton"
-            android:layout_marginRight="8dp" />
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <Button
-        android:layout_width="52dp"
-        android:layout_height="45dp"
-        android:background="@drawable/stop"
-        android:id="@+id/pauseButton"
-        android:onClick="spotifyPlayPause"
+            <LinearLayout
 
-            tools:layout_constraintRight_creator="1"
-            tools:layout_constraintLeft_creator="1"
-            tools:layout_constraintTop_creator="1"
-            android:layout_marginTop="83dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/nextButton"
-            android:layout_marginRight="22dp" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="@dimen/activity_horizontal_margin"
+                android:weightSum="1"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                tools:layout_editor_absoluteY="63dp">
 
-        <Button
-        android:layout_width="56dp"
-        android:layout_height="46dp"
-        android:background="@drawable/next"
-        android:id="@+id/nextButton"
-        android:onClick="spotifyNext"
-            tools:layout_constraintRight_creator="1"
-            tools:layout_constraintBaseline_creator="1"
-            android:layout_marginEnd="88dp"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="83dp"
-            android:layout_marginRight="8dp"
+                <Button
+                    android:id="@+id/playButton"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/playpause"
+                    android:onClick="spotifyPlayPause"
+                    android:padding="8dp"
+                    tools:layout_editor_absoluteX="96dp"
+                    tools:layout_editor_absoluteY="83dp" />
+
+
+                <Button
+                    android:id="@+id/nextButton"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/next"
+                    android:onClick="spotifyNext"
+                    android:padding="8dp"
+                    tools:layout_editor_absoluteX="205dp"
+                    tools:layout_editor_absoluteY="83dp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/launchSpotify"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:clickable="true"
+                android:onClick="openSpotify"
+                android:text="Playlist"
+                android:textSize="12dp"
+                android:textColor="@color/colorAccent"
+                android:typeface="monospace"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:layout_editor_absoluteY="186dp" />
+        </LinearLayout>
+
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="226dp"
+            android:layout_height="134dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="8dp"
+            android:src="@mipmap/ic_launcher"
+            app:layout_constraintBottom_toTopOf="@+id/bStart"
+            app:layout_constraintHorizontal_bias="0.503"
+            app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent" />
 
 
-    <Button
-        android:id="@+id/launchSpotify"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:background="@android:color/transparent"
-        android:clickable="true"
-        android:fontFamily="sans-serif-condensed"
-        android:onClick="openSpotify"
-        android:text="@string/spotify_playlist"
-        android:textAllCaps="false"
-        android:textColor="#00D95F"
-        android:textSize="20dp"
-        android:textStyle="italic"
-        android:typeface="monospace"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pauseButton" />
-
-
-
-    <ImageView
-            android:layout_width="234dp"
-            android:layout_height="268dp"
-            android:layout_gravity="right"
-        android:src="@mipmap/ic_launcher"
-        android:id="@+id/imageView"
-        android:layout_marginRight="60dp"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginLeft="60dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="8dp"
-        app:layout_constraintVertical_bias="0.242"
-        android:layout_marginStart="60dp"
-        android:layout_marginEnd="60dp"
-        tools:layout_constraintRight_creator="1"
-        tools:layout_constraintLeft_creator="1"
-        tools:layout_constraintTop_creator="1"
-        tools:layout_constraintBottom_creator="1"
-        app:layout_constraintHorizontal_bias="0.866" />
-
-
-    <Button
-        android:id="@+id/bSettings"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:background="@color/colorAccent"
-        android:text="Settings"
-        android:textColor="@color/colorPrimaryDark"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/bStart"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        tools:layout_constraintBottom_creator="1"
-        tools:layout_constraintLeft_creator="1"
-        tools:layout_constraintRight_creator="1" />
-
-        <TextView
-            android:id="@+id/tvgraph"
-            android:layout_width="158dp"
-            android:layout_height="26dp"
-            android:layout_weight="0.11"
-            android:fontFamily="sans-serif"
-            android:lineSpacingExtra="8sp"
-            android:text="View your latest Sleep"
+        <Button
+            android:id="@+id/bStart"
+            android:layout_width="249dp"
+            android:layout_height="68dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="30dp"
+            android:text="Start Soundly"
             android:textColor="@color/colorPrimaryDark"
-            android:typeface="normal"
-            tools:text="View your latest Sleep"
-            android:layout_marginLeft="8dp"
+            android:background="@color/colorAccent"
+            android:textStyle="bold"
             app:layout_constraintLeft_toLeftOf="parent"
-            android:layout_marginRight="8dp"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintHorizontal_bias="0.038"
-            tools:layout_constraintRight_creator="1"
-            android:layout_marginStart="8dp"
+            tools:layout_editor_absoluteY="268dp" />
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
-            tools:layout_constraintLeft_creator="1"
-            tools:layout_constraintTop_creator="1"
-            android:layout_marginTop="16dp"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal"
+            android:weightSum="1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bStart">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="78dp"
+                android:layout_gravity="center"
+                android:freezesText="true"
+                android:paddingRight="16dp"
+                android:paddingTop="16dp"
+                android:textSize="30sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/Buttons"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="359dp" />
+
+            <EditText
+                android:id="@+id/editText"
+                android:layout_width="123dp"
+                android:layout_height="76dp"
+                android:ems="10"
+                android:hint="Time in Mins"
+                android:inputType="number"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:layout_editor_absoluteX="125dp"
+                tools:layout_editor_absoluteY="361dp" />
 
 
-    <Button
-        android:id="@+id/bStart"
-        android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:layout_marginBottom="8dp"
-        android:background="@color/colorAccent"
-        android:text="Start Soundly"
-        android:textColor="@color/colorPrimaryDark"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/textView"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        tools:layout_constraintBottom_creator="1"
-        tools:layout_constraintLeft_creator="1"
-        tools:layout_constraintRight_creator="1" />
+            <LinearLayout
+                android:id="@+id/Buttons"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
+                android:orientation="vertical"
+                app:layout_constraintRight_toRightOf="parent"
+                tools:layout_editor_absoluteY="8dp">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="0dp"
-        android:layout_height="30dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:hint="countdown"
-        android:freezesText="true"
-        app:layout_constraintBottom_toTopOf="@+id/editText"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+                <Button
+                    android:id="@+id/startButton"
+                    android:background="@color/colorAccent"
+                    android:layout_width="100dp"
+                    android:layout_height="35dp"
+                    android:layout_margin="4dp"
+                    android:text="Start Timer"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:layout_editor_absoluteX="20dp"
+                    tools:layout_editor_absoluteY="457dp" />
 
-    <EditText
-        android:id="@+id/editText"
-        android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:ems="10"
-        android:hint="Enter Time in Minutes"
-        android:inputType="number"
-        app:layout_constraintBottom_toTopOf="@+id/startButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+                <Button
+                    android:id="@+id/stopButton"
+                    android:background="@color/colorAccent"
+                    android:layout_width="100dp"
+                    android:layout_height="35dp"
+                    android:layout_margin="4dp"
+                    android:text="Cancel"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    tools:layout_editor_absoluteX="266dp"
+                    tools:layout_editor_absoluteY="457dp" />
 
-    <Button
-        android:id="@+id/startButton"
-        android:layout_width="154dp"
-        android:layout_height="50dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginStart="20dp"
-        android:background="@color/colorAccent"
-        android:text="Start Timer"
-        android:textColor="@color/colorPrimaryDark"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_constraintBottom_creator="1"
-        tools:layout_constraintLeft_creator="1"
-        tools:layout_constraintRight_creator="1" />
+            </LinearLayout>
 
-    <Button
-        android:id="@+id/stopButton"
-        android:layout_width="154dp"
-        android:layout_height="50dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginTop="8dp"
-        android:background="@color/colorAccent"
-        android:text="Cancel"
-        android:textStyle="bold"
-        android:textColor="@color/colorPrimaryDark"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText"/>
+        </LinearLayout>
+
+
+    </LinearLayout>
 
 
 </android.support.constraint.ConstraintLayout>

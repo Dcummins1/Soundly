@@ -5,20 +5,21 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!--<uses-permission android:name="android.permission.WRite"-->
 
-    <!-- <uses-permission android:name="android.permission.WRite" -->
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+        android:label="Soundly"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
             android:name=".LoginActivity"
-            android:label="@string/title_activity_login"
+            android:label="Soundly"
+            android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -28,23 +29,27 @@
         <activity
             android:name=".UserAreaActivity"
             android:exported="true"
-            android:screenOrientation="portrait" />
+            android:theme="@style/AppTheme"
+            android:screenOrientation="portrait"
+            />
         <activity
             android:name=".SignupActivity"
-            android:label="@string/title_activity_signup"
+            android:label=""
+            android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
+            />
         <activity
             android:name=".SettingsActivity"
-            android:exported="true"
             android:label="Settings"
+            android:theme="@style/AppTheme"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
+            />
         <activity
             android:name=".ResetPasswordActivity"
             android:label="@string/title_activity_reset_password"
+            android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
+            />
         <activity android:name=".AccelerometerActivity">
             <intent-filter>
                 <action android:name="android.intent.action.SYSTEM_TUTORIAL" />
@@ -52,29 +57,32 @@
         </activity>
         <activity
             android:name=".SleepGraph"
-            android:label="@string/title_activity_sleep_graph"
+            android:label= "@string/title_activity_sleep_graph"
+            android:theme="@style/AppTheme"
+            android:noHistory="true"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
+            >
             <intent-filter>
-                <action android:name="android.intent.action.SYSTEM_TUTORIAL" />
-            </intent-filter>
-        </activity>
+            <action android:name="android.intent.action.SYSTEM_TUTORIAL" />
+        </intent-filter></activity>
         <activity
             android:name=".TimerActivity"
             android:exported="true"
-            android:screenOrientation="portrait" />
-
-        <service android:name=".TimerService" />
-
+            android:screenOrientation="portrait"
+            >
+        </activity>
+        <service
+            android:name=".TimerService">
+        </service>
         <receiver
-            android:name=".AdminReceiver"
+            android:name="AdminReceiver"
             android:permission="android.permission.BIND_DEVICE_ADMIN">
             <meta-data
                 android:name="android.app.device_admin"
-                android:resource="@xml/device_admin" />
+                android:resource="@xml/device_admin"/>
 
             <intent-filter>
-                <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
+                <action android:name="android.app.action.DEVICE_ADMIN_ENABLED"/>
             </intent-filter>
         </receiver>
 

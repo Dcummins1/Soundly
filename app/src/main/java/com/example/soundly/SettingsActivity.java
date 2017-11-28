@@ -6,6 +6,8 @@ import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,7 +25,7 @@ import com.google.firebase.auth.FirebaseUser;
 public class SettingsActivity extends AppCompatActivity {
 
     SharedPreferences sharedpreferences;
-    private Button btnChangePassword, btnRemoveUser, signOut, changePassword;
+    private Button btnChangePassword, btnRemoveUser, changePassword;
     private EditText password, newPassword;
     private ProgressBar progressBar;
     private SeekBar slide;
@@ -33,6 +35,7 @@ public class SettingsActivity extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener authListener;
     private FirebaseAuth auth;
     private int senser1;
+    private boolean saving;
 
     public static final String MyPREFERENCES = "MyPrefs";
     public static final String savefile = "saveFile";
@@ -61,17 +64,20 @@ public class SettingsActivity extends AppCompatActivity {
                 }
             }
         };
+        swsave = (Switch) findViewById(R.id.swSaveFile);
 
         btnChangePassword = (Button) findViewById(R.id.bChangePassword);
         btnRemoveUser = (Button) findViewById(R.id.bDeleteUser);
-        signOut = (Button) findViewById(R.id.bLogout);
+
 
         password = (EditText) findViewById(R.id.etPassword);
         newPassword = (EditText) findViewById(R.id.etnewPassword);
         save = (TextView) findViewById(R.id.tvSave);
         sense = (TextView) findViewById(R.id.tvSense);
         slide = (SeekBar) findViewById(R.id.seekBar);
-        slide.setProgress(loadSharedPreferences());
+        loadSharedPreferences();
+        swsave.setChecked(saving);
+        slide.setProgress(senser1);
         slide.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
             @Override
@@ -94,7 +100,7 @@ public class SettingsActivity extends AppCompatActivity {
         });
 
 
-        swsave = (Switch) findViewById(R.id.swSaveFile);
+
 
         password.setVisibility(View.GONE);
         newPassword.setVisibility(View.GONE);
@@ -160,7 +166,7 @@ public class SettingsActivity extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()) {
-                                        Toast.makeText(SettingsActivity.this, "Your profile is deleted:( Create a account now!", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(SettingsActivity.this, "Your profile is deleted. Create an account", Toast.LENGTH_SHORT).show();
                                         startActivity(new Intent(SettingsActivity.this, SignupActivity.class));
                                         finish();
                                         progressBar.setVisibility(View.GONE);
@@ -174,12 +180,7 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
-        signOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                signOut();
-            }
-        });
+
 
 
 //        slide.onProgressChanged(new View.OnClickListener() {
@@ -205,7 +206,7 @@ public class SettingsActivity extends AppCompatActivity {
 
                 boolean saveFile = swsave.isChecked();
                 savePref(saveFile);
-                Toast.makeText(SettingsActivity.this, "getting here", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(SettingsActivity.this, saveFile+"", Toast.LENGTH_SHORT).show();
 //
 
             }
@@ -254,18 +255,54 @@ public class SettingsActivity extends AppCompatActivity {
         }
     }
 
-    private int loadSharedPreferences() {
+    private void loadSharedPreferences() {
 
 
         if (sharedpreferences != null) {
-            senser1 = sharedpreferences.getInt(
-                    sensitivity, 0);
+            senser1 = sharedpreferences.getInt(sensitivity, 0);
+            saving = sharedpreferences.getBoolean(savefile, true);
 
         } else {
             senser1 = 1;
+            saving = true;
         }
-        return senser1;
 
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent;
+        switch(item.getItemId()) {
+            case R.id.menu_home:
+                intent = new Intent(this, UserAreaActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                break;
+            case R.id.menu_settings:
+//                intent = new Intent(this, SettingsActivity.class);
+//                startActivity(intent);
+                break;
+            case R.id.menu_sleep_graph:
+                intent = new Intent(this, SleepGraph.class);
+                startActivity(intent);
+                break;
+            case R.id.menu_sign_out:
+                signOut();
+                intent = new Intent(this, LoginActivity.class);
+                startActivity(intent);
+                break;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
+        return true;
     }
 }
 

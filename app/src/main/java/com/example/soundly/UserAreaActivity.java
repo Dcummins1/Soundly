@@ -7,7 +7,11 @@ import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -39,6 +43,8 @@ import android.util.Log;
 //
 //import java.io.BufferedReader;
 //import java.io.BufferedWriter;
+import com.google.firebase.auth.FirebaseAuth;
+
 import java.io.File;
 import java.io.FileOutputStream;
 //import java.io.FileReader;
@@ -53,7 +59,7 @@ import java.util.Date;
 //CONAN PASTE CLOSE
 
 public class UserAreaActivity extends AppCompatActivity implements SensorEventListener {
-
+    private FirebaseAuth auth;
     EditText editText;
     Button timerButton, stopButton, settings, soundly;
     TextView textView, tvGraph;
@@ -89,7 +95,7 @@ public class UserAreaActivity extends AppCompatActivity implements SensorEventLi
     private int sensitivity = 1;
     private double sleepThreshold = 0.15;
 
-    private boolean saveFile = true;
+    private boolean saveFile;
     private boolean soundlyOn = false;
 
 //    private TextView currentX, currentY, currentZ, maxX, maxY, maxZ;
@@ -111,25 +117,26 @@ public class UserAreaActivity extends AppCompatActivity implements SensorEventLi
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        auth = FirebaseAuth.getInstance();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_area);
 
         //@Dan changed tvGraph, soundly and settings slightly
-        tvGraph = (TextView) findViewById(R.id.tvgraph);
+        //tvGraph = (TextView) findViewById(R.id.tvgraph);
         soundly = (Button) findViewById(R.id.bStart);
-        settings = (Button) findViewById(R.id.bSettings);
+//        settings = (Button) findViewById(R.id.bSettings);
         timerButton = (Button) findViewById(R.id.startButton);
         stopButton = (Button) findViewById(R.id.stopButton);
         editText = (EditText) findViewById(R.id.editText);
         textView = (TextView) findViewById(R.id.textView);
 
 
-        tvGraph.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(UserAreaActivity.this, SleepGraph.class));
-            }
-        });
+//        tvGraph.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                startActivity(new Intent(UserAreaActivity.this, SleepGraph.class));
+//            }
+//        });
 
 
         soundly.setOnClickListener(new View.OnClickListener() {
@@ -137,11 +144,14 @@ public class UserAreaActivity extends AppCompatActivity implements SensorEventLi
             public void onClick(View v) {
 //                startActivity(new Intent(UserAreaActivity.this, AccelerometerActivity.class));
                 if(soundly.getText().equals("Start Soundly")){
+                    Date date = new Date();
+                    Context context = getApplicationContext();
+                    createOutputFile(date.toString() + "\n");
                     soundlyOn = true;
                     soundly.setText("Stop Soundly");
-                    Context context = getApplicationContext();
+
                     CharSequence textT = "Soundly Activated";
-                    int duration = Toast.LENGTH_LONG;
+                    int duration = Toast.LENGTH_SHORT;
                     Toast toast = Toast.makeText(context, textT, duration);
                     toast.show();
                 }
@@ -150,7 +160,7 @@ public class UserAreaActivity extends AppCompatActivity implements SensorEventLi
                     soundly.setText("Start Soundly");
                     Context context = getApplicationContext();
                     CharSequence textT = "Soundly Deactivated";
-                    int duration = Toast.LENGTH_LONG;
+                    int duration = Toast.LENGTH_SHORT;
                     Toast toast = Toast.makeText(context, textT, duration);
                     toast.show();
                     lastTotal1 = 1000;
@@ -160,24 +170,28 @@ public class UserAreaActivity extends AppCompatActivity implements SensorEventLi
 
             }
         });
-        settings.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(UserAreaActivity.this, SettingsActivity.class));
-            }
-        });
+//        settings.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                startActivity(new Intent(UserAreaActivity.this, SettingsActivity.class));
+//            }
+//        });
 
 
         //creates onClickListener for start button.
         timerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                InputMethodManager inputManager = (InputMethodManager)
+                        getSystemService(Context.INPUT_METHOD_SERVICE);
+
+                inputManager.hideSoftInputFromWindow((null == getCurrentFocus()) ? null : getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
 
                 //checks if there is user input; displays toast when no input has been given.
                 if (editText.getText().toString().equals("")) {
                     Context context = getApplicationContext();
                     CharSequence textT = "Please enter time";
-                    int duration = Toast.LENGTH_LONG;
+                    int duration = Toast.LENGTH_SHORT;
 
                     Toast toast = Toast.makeText(context, textT, duration);
                     toast.show();
@@ -191,7 +205,7 @@ public class UserAreaActivity extends AppCompatActivity implements SensorEventLi
                     if (seconds == 0) {
                         Context context = getApplicationContext();
                         CharSequence textT = "Please enter valid time input";
-                        int duration = Toast.LENGTH_LONG;
+                        int duration = Toast.LENGTH_SHORT;
 
                         Toast toast = Toast.makeText(context, textT, duration);
                         toast.show();
@@ -205,12 +219,17 @@ public class UserAreaActivity extends AppCompatActivity implements SensorEventLi
                             public void onTick(long l) {
                                 long minutes = l / 60000;
                                 long seconds = l / 1000 % 60;
-                                textView.setText("Time remaining: " + minutes + ":" + seconds);
+                                editText.setVisibility(View.GONE);
+                                textView.setText("" + minutes + ":" + seconds);
+                                textView.setVisibility(View.VISIBLE);
+
                             }
 
                             @Override
                             public void onFinish() {
-                                textView.setText("Finished!");
+                                Toast.makeText(UserAreaActivity.this, "Finished", Toast.LENGTH_LONG).show();
+                                textView.setVisibility(View.GONE);
+                                editText.setVisibility(View.VISIBLE);
                                 editText.setFocusableInTouchMode(true);
                                 System.out.println("finished");
 //                                stopService(new Intent(getBaseContext(), TimerService.class));
@@ -230,7 +249,8 @@ public class UserAreaActivity extends AppCompatActivity implements SensorEventLi
                             @Override
                             public void onClick(View view) {
                                 countDownTimer.cancel();
-                                textView.setText("");
+                                textView.setVisibility(View.GONE);
+                                editText.setVisibility(View.VISIBLE);
                                 editText.setFocusableInTouchMode(true);
 //                                stopService(new Intent(getBaseContext(), TimerService.class));
                             }
@@ -258,15 +278,9 @@ public class UserAreaActivity extends AppCompatActivity implements SensorEventLi
             sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
         } else {
             // fail! we don't have an accelerometer!
+            Toast.makeText(this, "You need an accelerometer for soundly", Toast.LENGTH_SHORT).show();
         }
-        Date date = new Date();
 
-        if(! wl.isHeld()){
-            Toast.makeText(this, "making file", Toast.LENGTH_LONG).show();
-
-            createOutputFile(date.toString() + "\n");
-//                System.out.println(date.toString());
-        }
 
         startTime = System.currentTimeMillis();
         devicePolicyManager = (DevicePolicyManager)getSystemService(Context.DEVICE_POLICY_SERVICE);
@@ -307,6 +321,8 @@ public class UserAreaActivity extends AppCompatActivity implements SensorEventLi
 
         if (yourFile.exists()) {
             System.out.println("file exists");
+            boolean deleted = yourFile.delete();
+
         }
 
 
@@ -476,7 +492,7 @@ public class UserAreaActivity extends AppCompatActivity implements SensorEventLi
             // display the current x,y,z accelerometer values
 //        displayCurrentValues();
             // display the max x,y,z accelerometer values
-//        displayMaxValues();
+            updateMaxValues();
 
             // get the change of the x,y,z values of the accelerometer
             deltaX = Math.abs(lastX - event.values[0]);
@@ -512,20 +528,20 @@ public class UserAreaActivity extends AppCompatActivity implements SensorEventLi
 //    }
 
     // display the max x,y,z accelerometer values
-//    public void displayMaxValues() {
-//        if (deltaX > deltaXMax) {
-//            deltaXMax = deltaX;
+    public void updateMaxValues() {
+        if (deltaX > deltaXMax) {
+            deltaXMax = deltaX;
 //            maxX.setText(Float.toString(deltaXMax));
-//        }
-//        if (deltaY > deltaYMax) {
-//            deltaYMax = deltaY;
+        }
+        if (deltaY > deltaYMax) {
+            deltaYMax = deltaY;
 //            maxY.setText(Float.toString(deltaYMax));
-//        }
-//        if (deltaZ > deltaZMax) {
-//            deltaZMax = deltaZ;
+        }
+        if (deltaZ > deltaZMax) {
+            deltaZMax = deltaZ;
 //            maxZ.setText(Float.toString(deltaZMax));
-//        }
-//    }
+        }
+    }
     //CONAN PASTE CLOSE
 
     public void spotifyPlayPause(View view){
@@ -585,4 +601,42 @@ public class UserAreaActivity extends AppCompatActivity implements SensorEventLi
             Toast.makeText(this, "Spotify not installed", Toast.LENGTH_LONG).show();
         }
     }
+    public void signOut() {
+        auth.signOut();
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent;
+        switch(item.getItemId()) {
+            case R.id.menu_home:
+//                intent = new Intent(this, UserAreaActivity.class);
+//                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                startActivity(intent);
+                break;
+            case R.id.menu_settings:
+                intent = new Intent(this, SettingsActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.menu_sleep_graph:
+                intent = new Intent(this, SleepGraph.class);
+                startActivity(intent);
+                break;
+            case R.id.menu_sign_out:
+                signOut();
+                intent = new Intent(this, LoginActivity.class);
+                startActivity(intent);
+                break;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
+        return true;
+    }
+
 }
