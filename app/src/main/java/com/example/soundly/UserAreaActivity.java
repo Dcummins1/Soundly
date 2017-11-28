@@ -480,8 +480,8 @@ public class UserAreaActivity extends AppCompatActivity implements SensorEventLi
             long currentTime = System.currentTimeMillis();
 
 
-            if (currentTime - startTime > 60000) {  //60000
-//            forceMusicStop();
+            if (currentTime - startTime > 3000) {  //60000 //3000 for demo
+               //forceMusicStop();
                 float total = deltaXMax + deltaYMax + deltaZMax;
                 System.out.println(currentTime + "," + total);
                 writeToTestFile(currentTime + "," + total + "\n");
